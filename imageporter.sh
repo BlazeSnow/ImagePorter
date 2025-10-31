@@ -6,7 +6,7 @@ set -e
 count=$(jq '. | length' images.json)
 
 # 登录源仓库和目标仓库
-if ![[ -z "$SOURCE_USERNAME" ] || [ -z "$SOURCE_PASSWORD" ]]; then
+if [ -n "$SOURCE_USERNAME" ] && [ -n "$SOURCE_PASSWORD" ]; then
 	crane auth login --username "$SOURCE_USERNAME" --password "$SOURCE_PASSWORD" "$SOURCE_REGISTRY"
 fi
 crane auth login --username "$TARGET_USERNAME" --password "$TARGET_PASSWORD" "$TARGET_REGISTRY"
@@ -18,7 +18,7 @@ for i in $(seq 0 $((count - 1))); do
 	SOURCE="$SOURCE_REGISTRY/$(jq -r ".[$i].source" images.json)"
 	TARGET="$TARGET_REGISTRY/$(jq -r ".[$i].target" images.json)"
 	PLATFORM="$(jq -r ".[$i].platform // empty" images.json)"
-	if [[ -z "$PLATFORM" ]]; then
+	if [ -z "$PLATFORM" ]; then
 		PLATFORM="$DEFAULT_PLATFORM"
 	fi
 
@@ -35,7 +35,7 @@ for i in $(seq 0 $((count - 1))); do
 	echo "digest: $TARGET_digest"
 
 	# 相同则跳过
-	if [[ -n "$SOURCE_digest" && -n "$TARGET_digest" && "$SOURCE_digest" == "$TARGET_digest" ]]; then
+	if [ -n "$SOURCE_digest" ] && [ -n "$TARGET_digest" ] && [ "$SOURCE_digest" == "$TARGET_digest" ]; then
 		echo "✅ 源和目的地内容一致，跳过同步"
 		continue
 	fi
