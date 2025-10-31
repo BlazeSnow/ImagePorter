@@ -49,5 +49,3 @@ for i in $(seq 0 $((count - 1))); do
 	echo "✅ 同步完成"
 
 done
-
-tail -f /var/log/crond.log

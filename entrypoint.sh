@@ -70,5 +70,6 @@ if [ "$DISABLE_FIRSTRUN" != "true" ]; then
 	/app/imageporter.sh
 else
 	echo "ℹ️ 启动时跳过镜像同步任务"
-	tail -f /var/log/crond.log
 fi
+
+tail -f /var/log/crond.log
