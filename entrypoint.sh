@@ -59,7 +59,8 @@ fi
 
 # 检查源仓库
 if [ -z "$SOURCE_REGISTRY" ]; then
-	echo "⚠️ 警告：SOURCE_REGISTRY未设置，默认留空"
+	echo "⚠️ 警告：SOURCE_REGISTRY未设置，默认为docker.io"
+	export SOURCE_REGISTRY="docker.io"
 fi
 
 # 检查源仓库用户名与密码
