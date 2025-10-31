@@ -15,18 +15,18 @@ ENV TZ="" \
 
 RUN apk --no-cache add cronie jq tzdata
 
-COPY ./crane /usr/local/bin/crane
-
 RUN mkdir -p /app
 
 WORKDIR /app
 
-COPY imageporter.sh /app/imageporter.sh
+COPY ./crane /usr/local/bin/crane
 
-RUN chmod +x /app/imageporter.sh
+COPY imageporter.sh /app/imageporter.sh
 
 COPY entrypoint.sh /app/entrypoint.sh
 
-RUN chmod +x /app/entrypoint.sh
+RUN chmod +x /usr/local/bin/crane \
+    chmod +x /app/imageporter.sh \
+    chmod +x /app/entrypoint.sh
 
 ENTRYPOINT ["/app/entrypoint.sh"]
