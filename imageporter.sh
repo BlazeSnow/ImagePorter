@@ -6,15 +6,17 @@ set -e
 count=$(jq '. | length' images.json)
 
 # 登录源仓库和目标仓库
-crane auth login --username "$SOURCE_USERNAME" --password "$SOURCE_PASSWORD" "$SOURCE_REGISTRY"
+if ![[ -z "$SOURCE_USERNAME" ] || [ -z "$SOURCE_PASSWORD" ]]; then
+	crane auth login --username "$SOURCE_USERNAME" --password "$SOURCE_PASSWORD" "$SOURCE_REGISTRY"
+fi
 crane auth login --username "$TARGET_USERNAME" --password "$TARGET_PASSWORD" "$TARGET_REGISTRY"
 
 # 循环处理
 for i in $(seq 0 $((count - 1))); do
 
 	# 设定变量
-	SOURCE="$(jq -r ".[$i].source" images.json)"
-	TARGET="$HEAD/$(jq -r ".[$i].target" images.json)"
+	SOURCE="$SOURCE_REGISTRY/$(jq -r ".[$i].source" images.json)"
+	TARGET="$TARGET_REGISTRY/$(jq -r ".[$i].target" images.json)"
 	PLATFORM="$(jq -r ".[$i].platform // empty" images.json)"
 	if [[ -z "$PLATFORM" ]]; then
 		PLATFORM="$DEFAULT_PLATFORM"
