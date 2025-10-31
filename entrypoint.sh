@@ -69,9 +69,11 @@ if [ -z "$SOURCE_USERNAME" ] || [ -z "$SOURCE_PASSWORD" ]; then
 fi
 
 # 开始运行
+echo "----------------------------------------"
 if [ "$DISABLE_FIRSTRUN" != "true" ]; then
 	echo "🚀 已允许启动时运行，正在运行镜像同步任务"
 	/app/imageporter.sh
+	echo "----------------------------------------"
 fi
 
 echo "🚀 正在启动cron服务"
