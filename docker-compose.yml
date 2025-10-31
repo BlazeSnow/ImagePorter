@@ -7,3 +7,5 @@ services:
     restart: no
     volumes:
       - ./images.json:/app/images.json:ro
+    env_file:
+      - .env
