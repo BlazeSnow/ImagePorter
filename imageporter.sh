@@ -1,25 +1,13 @@
 #!/bin/sh
+
 set -e
-
-TARGET_REGISTRY="$TARGET_REGISTRY"
-DEFAULT_PLATFORM="$DEFAULT_PLATFORM"
-
-# 检查目标仓库
-if [ -z "$TARGET_REGISTRY" ]; then
-	echo "❌ 错误：TARGET_REGISTRY未设置"
-	exit 1
-fi
 
 # 镜像数量
 count=$(jq '. | length' images.json)
 
-# 检查target有无重复
-duplicate_targets=$(jq -r '.[].target' images.json | sort | uniq -d)
-if [[ -n "$duplicate_targets" ]]; then
-	echo "❌ 错误：target存在重复"
-	echo "$duplicate_targets"
-	exit 1
-fi
+# 登录源仓库和目标仓库
+crane auth login --username "$SOURCE_USERNAME" --password "$SOURCE_PASSWORD" "$SOURCE_REGISTRY"
+crane auth login --username "$TARGET_USERNAME" --password "$TARGET_PASSWORD" "$TARGET_REGISTRY"
 
 # 循环处理
 for i in $(seq 0 $((count - 1))); do

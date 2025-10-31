@@ -8,6 +8,14 @@ if [ ! -f images.json ]; then
 	exit 1
 fi
 
+# 检查images.json文件中的target有无重复
+duplicate_targets=$(jq -r '.[].target' images.json | sort | uniq -d)
+if [[ -n "$duplicate_targets" ]]; then
+	echo "❌ 错误：target存在重复"
+	echo "$duplicate_targets"
+	exit 1
+fi
+
 # 检查时区设置
 if [ -z "$TZ" ]; then
 	echo "⚠️ 警告：TZ未设置，默认使用UTC"
