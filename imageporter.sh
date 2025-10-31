@@ -6,7 +6,7 @@ set -e
 count=$(jq '. | length' images.json)
 
 # 登录源仓库和目标仓库
-if [ -z "$SOURCE_USERNAME" ] && [ -z "$SOURCE_PASSWORD" ]; then
+if [ -n "$SOURCE_USERNAME" ] && [ -n "$SOURCE_PASSWORD" ]; then
 	crane auth login --username "$SOURCE_USERNAME" --password "$SOURCE_PASSWORD" "$SOURCE_REGISTRY"
 fi
 crane auth login --username "$TARGET_USERNAME" --password "$TARGET_PASSWORD" "$TARGET_REGISTRY"
