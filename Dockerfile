@@ -26,7 +26,7 @@ COPY imageporter.sh /app/imageporter.sh
 COPY entrypoint.sh /app/entrypoint.sh
 
 RUN chmod +x /usr/local/bin/crane \
-    chmod +x /app/imageporter.sh \
-    chmod +x /app/entrypoint.sh
+    && chmod +x /app/imageporter.sh \
+    && chmod +x /app/entrypoint.sh
 
 ENTRYPOINT ["/app/entrypoint.sh"]
