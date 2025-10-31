@@ -30,6 +30,7 @@ if [ -z "$CRON" ]; then
 	export CRON="0 0 * * *"
 fi
 echo "$CRON /app/imageporter.sh" >imageporter
+mkdir -p /root/.cache
 crontab imageporter
 rm imageporter
 

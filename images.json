@@ -1,12 +1,12 @@
 [
     {
         "source": "hello-world:latest",
-        "target": "hello-world:latest",
+        "target": "blazesnow/hello-world:latest",
         "platform": "linux/amd64"
     },
     {
         "source": "busybox:latest",
-        "target": "busybox:latest",
+        "target": "blazesnow/busybox:latest",
         "platform": "linux/amd64"
     }
 ]
