@@ -29,10 +29,10 @@ if [ -z "$CRON" ]; then
 	echo "⚠️ 警告：CRON未设置，默认每日0时执行一次"
 	export CRON="0 0 * * *"
 fi
-echo "$CRON /app/imageporter.sh" >imageporter
+echo "$CRON /app/imageporter.sh" >/app/imageporter.cron
 mkdir -p /root/.cache
-crontab imageporter
-rm imageporter
+crontab /app/imageporter.cron
+rm /app/imageporter.cron
 
 # 检查启动时运行设置
 if [ -z "$DISABLE_FIRSTRUN" ]; then
