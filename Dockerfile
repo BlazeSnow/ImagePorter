@@ -2,10 +2,10 @@ FROM alpine:latest
 
 LABEL maintainer="hello@blazesnow.com"
 
-ENV TZ=UTC \
-    CRON="0 0 * * *" \
-    DISABLE_FIRSTRUN="false" \
-    DEFAULT_PLATFORM="linux/amd64" \
+ENV TZ="" \
+    CRON="" \
+    DISABLE_FIRSTRUN="" \
+    DEFAULT_PLATFORM="" \
     SOURCE_REGISTRY="" \
     SOURCE_USERNAME="" \
     SOURCE_PASSWORD="" \

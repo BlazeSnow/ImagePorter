@@ -10,12 +10,6 @@ if [ -z "$TARGET_REGISTRY" ]; then
 	exit 1
 fi
 
-# 检查images.json文件
-if [[ ! -f images.json ]]; then
-	echo "❌ 错误：images.json不存在"
-	exit 1
-fi
-
 # 镜像数量
 count=$(jq '. | length' images.json)
 
