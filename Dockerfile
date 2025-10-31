@@ -4,6 +4,7 @@ LABEL maintainer="hello@blazesnow.com"
 
 ENV TZ=UTC \
     CRON="0 0 * * *" \
+    DEFAULT_PLATFORM="linux/amd64" \
     SOURCE_REGISTRY="" \
     SOURCE_USERNAME="" \
     SOURCE_PASSWORD="" \
