@@ -3,12 +3,8 @@
 set -e
 
 # 读取环境变量
-if [ -n "$SOURCE_REGISTRY" ]; then
-	SOURCE_REGISTRY="${SOURCE_REGISTRY%/}"
-fi
-if [ -n "$TARGET_REGISTRY" ]; then
-	TARGET_REGISTRY="${TARGET_REGISTRY%/}"
-fi
+SOURCE_REGISTRY="${SOURCE_REGISTRY%/}"
+TARGET_REGISTRY="${TARGET_REGISTRY%/}"
 
 # 镜像数量
 count=$(jq '. | length' images.json)
