@@ -45,9 +45,14 @@ if [ -z "$DEFAULT_PLATFORM" ]; then
 	export DEFAULT_PLATFORM="linux/amd64"
 fi
 
-# 检查目标仓库、用户名与密码
-if [ -z "$TARGET_REGISTRY" ] || [ -z "$TARGET_USERNAME" ] || [ -z "$TARGET_PASSWORD" ]; then
-	echo "❌ 错误：TARGET_REGISTRY、TARGET_USERNAME或TARGET_PASSWORD未设置"
+# 检查目标仓库
+if [ -z "$TARGET_REGISTRY" ]; then
+	echo "⚠️ 警告：TARGET_REGISTRY未设置，默认留空"
+fi
+
+# 检查目标仓库用户名与密码
+if [ -z "$TARGET_USERNAME" ] || [ -z "$TARGET_PASSWORD" ]; then
+	echo "❌ 错误：TARGET_USERNAME或TARGET_PASSWORD未设置，无法登录目标仓库"
 	exit 1
 fi
 
