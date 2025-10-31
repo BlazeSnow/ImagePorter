@@ -76,6 +76,4 @@ else
 	echo "ℹ️ 启动时跳过镜像同步任务"
 fi
 
-touch /var/log/crond.log
-crond -L /var/log/crond.log -n &
-tail -f /var/log/crond.log
+crond -s
