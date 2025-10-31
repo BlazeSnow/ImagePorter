@@ -1,0 +1,12 @@
+[
+    {
+        "source": "hello-world:latest",
+        "target": "hello-world:latest",
+        "platform": "linux/amd64"
+    },
+    {
+        "source": "busybox:latest",
+        "target": "busybox:latest",
+        "platform": "linux/amd64"
+    }
+]
