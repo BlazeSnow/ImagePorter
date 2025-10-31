@@ -35,7 +35,7 @@ for i in $(seq 0 $((count - 1))); do
 	echo "digest: $TARGET_digest"
 
 	# 相同则跳过
-	if [ -n "$SOURCE_digest" ] && [ -n "$TARGET_digest" ] && [ "$SOURCE_digest" == "$TARGET_digest" ]; then
+	if [ -n "$SOURCE_digest" ] && [ -n "$TARGET_digest" ] && [ "$SOURCE_digest" = "$TARGET_digest" ]; then
 		echo "✅ 源和目的地内容一致，跳过同步"
 		continue
 	fi
