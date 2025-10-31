@@ -77,4 +77,4 @@ if [ "$DISABLE_FIRSTRUN" != "true" ]; then
 fi
 
 echo "🚀 正在启动cron服务"
-crond -s -n
+crond -n
