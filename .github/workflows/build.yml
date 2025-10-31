@@ -36,6 +36,9 @@ jobs:
     - name: Download Crane
       run: go install github.com/google/go-containerregistry/cmd/crane@latest
 
+    - name: Copy Crane to workspace
+      run: cp /home/runner/go/bin/crane ${GITHUB_WORKSPACE}/crane
+
     - name: Build and push
       uses: docker/build-push-action@v6
       with:
