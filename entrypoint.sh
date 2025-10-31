@@ -29,7 +29,8 @@ if [ -z "$CRON" ]; then
 	echo "⚠️ 警告：CRON未设置，默认每日0时执行一次"
 	export CRON="0 0 * * *"
 fi
-echo "$CRON /app/imageporter.sh" >/app/imageporter.cron
+echo 'MAILTO=""' >/app/imageporter.cron
+echo "$CRON /app/imageporter.sh" >>/app/imageporter.cron
 mkdir -p /root/.cache
 crontab /app/imageporter.cron
 rm /app/imageporter.cron
