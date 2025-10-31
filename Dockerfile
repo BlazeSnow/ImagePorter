@@ -11,9 +11,7 @@ ENV TZ=UTC \
     TARGET_USERNAME="" \
     TARGET_PASSWORD=""
 
-RUN apk --no-cache add crontab \
-    jq \
-    bash
+RUN apk --no-cache add crontab jq
 
 COPY ./crane /usr/local/bin/crane
 
