@@ -70,10 +70,9 @@ fi
 
 # 开始运行
 if [ "$DISABLE_FIRSTRUN" != "true" ]; then
-	echo "🚀 启动时运行镜像同步任务"
+	echo "🚀 已允许启动时运行，正在运行镜像同步任务"
 	/app/imageporter.sh
-else
-	echo "ℹ️ 启动时跳过镜像同步任务"
 fi
 
+echo "🚀 正在启动cron服务"
 crond -s -n

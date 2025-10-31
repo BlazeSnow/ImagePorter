@@ -32,9 +32,9 @@ for i in $(seq 0 $((count - 1))); do
 
 	# 分隔符
 	echo "----------------------------------------"
+	echo "$(date '+%Y-%m-%d %H:%M:%S')"
 	echo "源镜像: $SOURCE"
 	echo "digest: $SOURCE_digest"
-
 	echo "目的地: $TARGET"
 	echo "digest: $TARGET_digest"
 
