@@ -76,4 +76,4 @@ else
 	echo "ℹ️ 启动时跳过镜像同步任务"
 fi
 
-crond -s
+crond -s -n
