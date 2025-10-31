@@ -13,7 +13,7 @@ ENV TZ="" \
     TARGET_USERNAME="" \
     TARGET_PASSWORD=""
 
-RUN apk --no-cache add crontab jq tzdata
+RUN apk --no-cache add cronie jq tzdata
 
 COPY ./crane /usr/local/bin/crane
 
