@@ -67,8 +67,6 @@ if [ -z "$SOURCE_USERNAME" ] || [ -z "$SOURCE_PASSWORD" ]; then
 fi
 
 # 开始运行
-crond -b -L /var/log/crond.log
-
 if [ "$DISABLE_FIRSTRUN" != "true" ]; then
 	echo "🚀 启动时运行镜像同步任务"
 	/app/imageporter.sh
@@ -76,4 +74,4 @@ else
 	echo "ℹ️ 启动时跳过镜像同步任务"
 fi
 
-tail -f /var/log/crond.log
+crond -f
