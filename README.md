@@ -65,6 +65,27 @@ TARGET_PASSWORD="PASSWORD"        # ⚠️必选：目标仓库密码
 ]
 ```
 
+## 镜像的命名方式
+
+### 源仓库的镜像
+
+`.env` 的 `SOURCE_REGISTRY` + `/` + `images.json` 的 `source`
+
+### 目标仓库的镜像
+
+`.env` 的 `TARGET_REGISTRY` + `/` + `images.json` 的 `target`
+
+### 镜像平台
+
+`images.json` 的 `platform`，若为空，取 `.env` 的 `DEFAULT_PLATFORM`
+
+## 运行逻辑
+
+1. 获取镜像列表
+2. 比较`target`的值有无重复
+3. 比较源镜像和目标镜像的`digest`值，若相同则跳过同步
+4. 使用`Crane`同步镜像
+
 ## 许可证
 
 本软件使用 MIT 许可证
