@@ -32,6 +32,9 @@ services:
 
 ### `.env`
 
+> [!TIP]
+> 此处标注的可选值均为默认值
+
 ```env
 TZ="Asia/Shanghai"                # 可选：时区
 CRON="0 0 * * *"                  # 可选：运行计划
