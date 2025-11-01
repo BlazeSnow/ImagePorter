@@ -30,8 +30,9 @@ if [ -z "$CRON" ]; then
 	export CRON="0 0 * * *"
 fi
 echo 'MAILTO=""' >/app/imageporter.cron
-echo "$CRON /app/imageporter.sh" >>/app/imageporter.cron
+echo "$CRON /app/imageporter.sh >> /var/log/imageporter.log 2>&1" >>/app/imageporter.cron
 mkdir -p /root/.cache
+touch /var/log/imageporter.log
 crontab /app/imageporter.cron
 rm /app/imageporter.cron
 
@@ -71,6 +72,8 @@ fi
 
 # 开始运行
 echo "----------------------------------------"
+echo "$(date '+%Y-%m-%d %H:%M:%S')"
+
 if [ "$DISABLE_FIRSTRUN" != "true" ]; then
 	echo "🚀 已允许启动时运行，正在运行镜像同步任务"
 	/app/imageporter.sh
@@ -78,4 +81,5 @@ if [ "$DISABLE_FIRSTRUN" != "true" ]; then
 fi
 
 echo "🚀 正在启动cron服务"
-crond -n
+crond
+tail -f /var/log/imageporter.log
