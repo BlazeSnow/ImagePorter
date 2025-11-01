@@ -18,8 +18,8 @@ fi
 
 # 检查时区设置
 if [ -z "$TZ" ]; then
-	echo "⚠️ 警告：TZ未设置，默认使用UTC"
-	export TZ="UTC"
+	echo "⚠️ 警告：TZ未设置，默认使用Asia/Shanghai"
+	export TZ="Asia/Shanghai"
 fi
 ln -snf /usr/share/zoneinfo/$TZ /etc/localtime
 echo $TZ >/etc/timezone
@@ -46,7 +46,8 @@ fi
 
 # 检查目标仓库
 if [ -z "$TARGET_REGISTRY" ]; then
-	echo "⚠️ 警告：TARGET_REGISTRY未设置，默认留空"
+	echo "❌ 错误：TARGET_REGISTRY未设置"
+	exit 1
 fi
 
 # 检查目标仓库用户名与密码
