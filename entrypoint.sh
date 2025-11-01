@@ -79,6 +79,9 @@ if [ "$DISABLE_FIRSTRUN" != "true" ]; then
 	echo "🚀 已允许启动时运行，正在运行镜像同步任务"
 	/app/imageporter.sh
 	echo "----------------------------------------"
+	echo "$(date '+%Y-%m-%d %H:%M:%S')"
+	echo "✅ 已完成启动时运行服务"
+	echo "----------------------------------------"
 fi
 
 echo "🚀 正在启动cron服务"
