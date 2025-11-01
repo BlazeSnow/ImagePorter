@@ -33,17 +33,15 @@ jobs:
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v3
 
-    - name: Download Crane
-      run: go install github.com/google/go-containerregistry/cmd/crane@latest
+    - name: Go install
+      run: |
+        CGO_ENABLED=0 go install github.com/google/go-containerregistry/cmd/crane@latest && \
+        CGO_ENABLED=0 go install github.com/aptible/supercronic@latest
 
-    - name: Copy Crane to workspace
-      run: cp $HOME/go/bin/crane $GITHUB_WORKSPACE/crane
-
-    - name: Download Supercronic
-      run: go install github.com/aptible/supercronic@latest
-
-    - name: Copy Supercronic to workspace
-      run: cp $HOME/go/bin/supercronic $GITHUB_WORKSPACE/supercronic
+    - name: Copy executable to workspace
+      run: |
+        cp $HOME/go/bin/crane $GITHUB_WORKSPACE/crane && \
+        cp $HOME/go/bin/supercronic $GITHUB_WORKSPACE/supercronic
 
     - name: CHECK
       run: |
