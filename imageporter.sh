@@ -2,10 +2,6 @@
 
 set -e
 
-# 读取环境变量
-SOURCE_REGISTRY="${SOURCE_REGISTRY%/}"
-TARGET_REGISTRY="${TARGET_REGISTRY%/}"
-
 # 镜像数量
 count=$(jq '. | length' images.json)
 
@@ -19,8 +15,8 @@ crane auth login --username "$TARGET_USERNAME" --password "$TARGET_PASSWORD" "$T
 for i in $(seq 0 $((count - 1))); do
 
 	# 设定变量
-	SOURCE="$SOURCE_REGISTRY/$(jq -r ".[$i].source" images.json)"
-	TARGET="$TARGET_REGISTRY/$(jq -r ".[$i].target" images.json)"
+	SOURCE="$(jq -r ".[$i].source" images.json)"
+	TARGET="$(jq -r ".[$i].target" images.json)"
 	PLATFORM="$(jq -r ".[$i].platform // empty" images.json)"
 	if [ -z "$PLATFORM" ]; then
 		PLATFORM="$DEFAULT_PLATFORM"

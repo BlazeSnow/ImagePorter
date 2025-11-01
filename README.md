@@ -40,7 +40,7 @@ TZ="Asia/Shanghai"                # 可选：时区
 CRON="0 0 * * *"                  # 可选：运行计划
 DISABLE_FIRSTRUN="false"          # 可选：启动时运行一次
 DEFAULT_PLATFORM="linux/amd64"    # 可选：镜像默认平台
-SOURCE_REGISTRY="docker.io"       # 可选：源仓库
+SOURCE_REGISTRY=""                # 可选：源仓库
 SOURCE_USERNAME=""                # 可选：源仓库用户名
 SOURCE_PASSWORD=""                # 可选：源仓库密码
 TARGET_REGISTRY="ghcr.io"         # ⚠️必选：目标仓库
@@ -54,12 +54,12 @@ TARGET_PASSWORD="PASSWORD"        # ⚠️必选：目标仓库密码
 [
     {
         "source": "hello-world:latest",
-        "target": "blazesnow/hello-world:latest",
+        "target": "ghcr.io/blazesnow/hello-world:latest",
         "platform": "linux/amd64"
     },
     {
         "source": "busybox:latest",
-        "target": "blazesnow/busybox:latest",
+        "target": "ghcr.io/blazesnow/busybox:latest",
         "platform": "linux/amd64"
     }
 ]
@@ -69,22 +69,23 @@ TARGET_PASSWORD="PASSWORD"        # ⚠️必选：目标仓库密码
 
 ### 源仓库的镜像
 
-`.env` 的 `SOURCE_REGISTRY` + `/` + `images.json` 的 `source`
+`images.json`的`source`
 
 ### 目标仓库的镜像
 
-`.env` 的 `TARGET_REGISTRY` + `/` + `images.json` 的 `target`
+`images.json`的`target`
 
 ### 镜像平台
 
-`images.json` 的 `platform`，若为空，取 `.env` 的 `DEFAULT_PLATFORM`
+`images.json`的`platform`，若为空，取`.env`的`DEFAULT_PLATFORM`
 
 ## 运行逻辑
 
-1. 获取镜像列表
-2. 比较`target`的值有无重复
-3. 比较源镜像和目标镜像的`digest`值，若相同则跳过同步
-4. 使用`Crane`同步镜像
+1. 获取`.env`中的`SOURCE_REGISTRY`和`TARGET_REGISTRY`并登录
+2. 获取镜像列表
+3. 比较`target`的值有无重复
+4. 比较源镜像和目标镜像的`digest`值，若相同则跳过同步
+5. 使用`Crane`同步镜像
 
 ## 许可证
 
