@@ -30,6 +30,7 @@ if [ -z "$CRON" ]; then
 	export CRON="0 0 * * *"
 fi
 echo 'MAILTO=""' >/app/imageporter.cron
+echo "PATH=/usr/local/bin:/usr/bin:/bin" >>/app/imageporter.cron
 echo "$CRON cd /app && ./imageporter.sh >> /var/log/imageporter.log 2>&1" >>/app/imageporter.cron
 mkdir -p /root/.cache
 touch /var/log/imageporter.log
@@ -82,4 +83,6 @@ fi
 
 echo "🚀 正在启动cron服务"
 crond
+echo "✅ 成功启动cron服务"
+echo "🚀 正在监听log文件"
 tail -f /var/log/imageporter.log
