@@ -81,8 +81,8 @@ if [ "$DISABLE_FIRSTRUN" != "true" ]; then
 	echo "$(date '+%Y-%m-%d %H:%M:%S')"
 fi
 
-echo "🚀 正在启动cron服务"
+echo "🚀 正在启动supercronic服务"
 supercronic --quiet /app/imageporter.cron &
-echo "✅ 成功启动cron服务"
+echo "✅ 成功启动supercronic服务"
 echo "🚀 正在监听log文件"
 tail -f /var/log/imageporter.log
