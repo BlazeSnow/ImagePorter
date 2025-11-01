@@ -45,8 +45,11 @@ jobs:
     - name: Copy Supercronic to workspace
       run: cp $HOME/go/bin/supercronic $GITHUB_WORKSPACE/supercronic
 
-    - name: ls workspace
-      run: ls -lh $GITHUB_WORKSPACE
+    - name: CHECK
+      run: |
+        ls -lh $GITHUB_WORKSPACE && \
+        file $GITHUB_WORKSPACE/crane && \
+        file $GITHUB_WORKSPACE/supercronic
 
     - name: Build and push
       uses: docker/build-push-action@v6
