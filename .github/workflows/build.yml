@@ -40,11 +40,7 @@ jobs:
       run: cp /home/runner/go/bin/crane ${GITHUB_WORKSPACE}/crane
 
     - name: Download Supercronic
-      run: |
-        go get -d github.com/aptible/supercronic && \
-        cd "${GOPATH}/src/github.com/aptible/supercronic" && \
-        go mod vendor && \
-        go install
+      run: go install github.com/aptible/supercronic@latest
 
     - name: Copy Supercronic to workspace
       run: cp /home/runner/go/bin/supercronic ${GITHUB_WORKSPACE}/supercronic
