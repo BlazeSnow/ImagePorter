@@ -30,7 +30,7 @@ if [ -z "$CRON" ]; then
 	export CRON="0 0 * * *"
 fi
 echo 'MAILTO=""' >/app/imageporter.cron
-echo "$CRON /app/imageporter.sh >> /var/log/imageporter.log 2>&1" >>/app/imageporter.cron
+echo "$CRON cd /app && ./imageporter.sh >> /var/log/imageporter.log 2>&1" >>/app/imageporter.cron
 mkdir -p /root/.cache
 touch /var/log/imageporter.log
 crontab /app/imageporter.cron
