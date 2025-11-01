@@ -1,3 +1,5 @@
 crane
 supercronic
 .env
+docker-compose.yml
+images.json
