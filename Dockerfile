@@ -1,6 +1,10 @@
 FROM alpine:latest
 
 LABEL maintainer="hello@blazesnow.com"
+LABEL repository="https://github.com/blazesnow/ImagePorter"
+LABEL description="A simple container to port container images between registries using Crane."
+LABEL license="MIT"
+LABEL version="2025.11.1.1"
 
 ENV TZ="" \
     CRON="" \
