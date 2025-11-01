@@ -29,13 +29,8 @@ if [ -z "$CRON" ]; then
 	echo "⚠️ 警告：CRON未设置，默认每日0时执行一次"
 	export CRON="0 0 * * *"
 fi
-echo 'MAILTO=""' >/app/imageporter.cron
-echo "PATH=/usr/local/bin:/usr/bin:/bin" >>/app/imageporter.cron
-echo "$CRON cd /app && ./imageporter.sh >> /var/log/imageporter.log 2>&1" >>/app/imageporter.cron
-mkdir -p /root/.cache
 touch /var/log/imageporter.log
-crontab /app/imageporter.cron
-rm /app/imageporter.cron
+echo "$CRON cd /app && ./imageporter.sh >> /var/log/imageporter.log 2>&1" >/app/imageporter.cron
 
 # 检查启动时运行设置
 if [ -z "$DISABLE_FIRSTRUN" ]; then
@@ -82,10 +77,11 @@ if [ "$DISABLE_FIRSTRUN" != "true" ]; then
 	echo "$(date '+%Y-%m-%d %H:%M:%S')"
 	echo "✅ 已完成启动时运行服务"
 	echo "----------------------------------------"
+	echo "$(date '+%Y-%m-%d %H:%M:%S')"
 fi
 
 echo "🚀 正在启动cron服务"
-crond
+supercronic --quiet /app/imageporter.cron &
 echo "✅ 成功启动cron服务"
 echo "🚀 正在监听log文件"
 tail -f /var/log/imageporter.log

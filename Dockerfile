@@ -13,7 +13,7 @@ ENV TZ="" \
     TARGET_USERNAME="" \
     TARGET_PASSWORD=""
 
-RUN apk --no-cache add cronie jq tzdata
+RUN apk --no-cache add jq tzdata
 
 RUN mkdir -p /app
 
@@ -21,11 +21,14 @@ WORKDIR /app
 
 COPY ./crane /usr/local/bin/crane
 
+COPY ./supercronic /usr/local/bin/supercronic
+
 COPY imageporter.sh /app/imageporter.sh
 
 COPY entrypoint.sh /app/entrypoint.sh
 
 RUN chmod +x /usr/local/bin/crane \
+    && chmod +x /usr/local/bin/supercronic \
     && chmod +x /app/imageporter.sh \
     && chmod +x /app/entrypoint.sh
 
