@@ -19,9 +19,9 @@ RUN mkdir -p /app
 
 WORKDIR /app
 
-COPY ./crane /usr/local/bin/crane
+COPY crane /usr/local/bin/crane
 
-COPY ./supercronic /usr/local/bin/supercronic
+COPY supercronic /usr/local/bin/supercronic
 
 COPY imageporter.sh /app/imageporter.sh
 
