@@ -37,6 +37,10 @@ if [ -z "$ENABLE_FIRSTRUN" ]; then
 	echo "⚠️ 警告：ENABLE_FIRSTRUN未设置，默认在启动时运行"
 	export ENABLE_FIRSTRUN="true"
 fi
+if [ -z "$RUN_ONCE" ]; then
+	echo "⚠️ 警告：RUN_ONCE未设置，默认不只运行一次"
+	export RUN_ONCE="false"
+fi
 
 # 检查默认平台设置
 if [ -z "$DEFAULT_PLATFORM" ]; then
