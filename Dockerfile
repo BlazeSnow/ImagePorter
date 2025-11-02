@@ -8,7 +8,7 @@ LABEL version="2025.11.1.1"
 
 ENV TZ="" \
     CRON="" \
-    DISABLE_FIRSTRUN="" \
+    ENABLE_FIRSTRUN="" \
     RUN_ONCE="" \
     DEFAULT_PLATFORM="" \
     SOURCE_REGISTRY="" \

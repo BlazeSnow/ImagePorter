@@ -33,9 +33,9 @@ touch /var/log/imageporter.log
 echo "$CRON cd /app && ./imageporter.sh >> /var/log/imageporter.log 2>&1" >/app/imageporter.cron
 
 # 检查启动时运行设置
-if [ -z "$DISABLE_FIRSTRUN" ]; then
-	echo "⚠️ 警告：DISABLE_FIRSTRUN未设置，默认不在启动时运行"
-	export DISABLE_FIRSTRUN="false"
+if [ -z "$ENABLE_FIRSTRUN" ]; then
+	echo "⚠️ 警告：ENABLE_FIRSTRUN未设置，默认在启动时运行"
+	export ENABLE_FIRSTRUN="true"
 fi
 
 # 检查默认平台设置
@@ -71,7 +71,7 @@ fi
 echo "----------------------------------------"
 echo "$(date '+%Y-%m-%d %H:%M:%S')"
 
-if [ "$DISABLE_FIRSTRUN" == "false" ]; then
+if [ "$ENABLE_FIRSTRUN" == "true" ]; then
 	echo "🚀 已允许启动时运行，正在运行镜像同步任务"
 	/app/imageporter.sh
 	echo "----------------------------------------"
@@ -79,6 +79,10 @@ if [ "$DISABLE_FIRSTRUN" == "false" ]; then
 	echo "✅ 已完成启动时运行服务"
 	echo "----------------------------------------"
 	echo "$(date '+%Y-%m-%d %H:%M:%S')"
+	if [ "$RUN_ONCE" == "true" ]; then
+		echo "⚠️ 已设置仅运行一次，正在退出容器"
+		exit 0
+	fi
 else
 	echo "⚠️ 已禁用启动时运行"
 fi
