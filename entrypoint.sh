@@ -89,6 +89,7 @@ if [ "$ENABLE_FIRSTRUN" == "true" ]; then
 	fi
 else
 	echo "⚠️ 已禁用启动时运行"
+	echo "⚠️ RUN_ONCE变量在禁用启动时运行后无效"
 fi
 
 echo "🚀 正在启动supercronic服务"
