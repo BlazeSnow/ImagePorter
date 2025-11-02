@@ -71,7 +71,7 @@ fi
 echo "----------------------------------------"
 echo "$(date '+%Y-%m-%d %H:%M:%S')"
 
-if [ "$DISABLE_FIRSTRUN" != "true" ]; then
+if [ "$DISABLE_FIRSTRUN" == "false" ]; then
 	echo "🚀 已允许启动时运行，正在运行镜像同步任务"
 	/app/imageporter.sh
 	echo "----------------------------------------"
