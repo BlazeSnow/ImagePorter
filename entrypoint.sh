@@ -79,6 +79,8 @@ if [ "$DISABLE_FIRSTRUN" == "false" ]; then
 	echo "✅ 已完成启动时运行服务"
 	echo "----------------------------------------"
 	echo "$(date '+%Y-%m-%d %H:%M:%S')"
+else
+	echo "⚠️ 已禁用启动时运行"
 fi
 
 echo "🚀 正在启动supercronic服务"
