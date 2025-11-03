@@ -38,7 +38,8 @@ services:
 ```env
 TZ="Asia/Shanghai"                # 可选：时区
 CRON="0 0 * * *"                  # 可选：运行计划
-DISABLE_FIRSTRUN="false"          # 可选：启动时运行一次
+RUN_ONCE="false"                  # 可选：运行一次后退出
+ENABLE_FIRSTRUN="true"            # 可选：启动时运行一次
 DEFAULT_PLATFORM="linux/amd64"    # 可选：镜像默认平台
 SOURCE_REGISTRY=""                # 可选：源仓库
 SOURCE_USERNAME=""                # 可选：源仓库用户名
