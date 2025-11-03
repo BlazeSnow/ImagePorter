@@ -81,6 +81,7 @@ if [ "$RUN_ONCE" == "true" ]; then
 	exit 0
 fi
 
+echo "⚠️ 已禁用仅运行一次"
 echo "🚀 正在启动supercronic服务"
 supercronic --quiet /app/imageporter.cron &
 echo "✅ 成功启动supercronic服务"
