@@ -37,10 +37,6 @@ if [ -z "$RUN_ONCE" ]; then
 	echo "⚠️ 警告：RUN_ONCE未设置，默认不只运行一次"
 	export RUN_ONCE="false"
 fi
-if [ -z "$ENABLE_FIRSTRUN" ]; then
-	echo "⚠️ 警告：ENABLE_FIRSTRUN未设置，默认在启动时运行"
-	export ENABLE_FIRSTRUN="true"
-fi
 
 # 检查默认平台设置
 if [ -z "$DEFAULT_PLATFORM" ]; then
@@ -83,19 +79,6 @@ if [ "$RUN_ONCE" == "true" ]; then
 	echo "✅ 已完成一次镜像同步任务"
 	echo "⚠️ 已设置仅运行一次，正在退出"
 	exit 0
-fi
-
-if [ "$ENABLE_FIRSTRUN" == "true" ]; then
-	echo "🚀 已允许启动时运行，正在运行镜像同步任务"
-	/app/imageporter.sh
-	echo "----------------------------------------"
-	echo "$(date '+%Y-%m-%d %H:%M:%S')"
-	echo "✅ 已完成启动时运行服务"
-	echo "----------------------------------------"
-	echo "$(date '+%Y-%m-%d %H:%M:%S')"
-
-else
-	echo "⚠️ 已禁用启动时运行"
 fi
 
 echo "🚀 正在启动supercronic服务"

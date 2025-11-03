@@ -9,7 +9,6 @@ LABEL version="2025.11.1.1"
 ENV TZ="" \
     CRON="" \
     RUN_ONCE="" \
-    ENABLE_FIRSTRUN="" \
     DEFAULT_PLATFORM="" \
     SOURCE_REGISTRY="" \
     SOURCE_USERNAME="" \
