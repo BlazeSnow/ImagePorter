@@ -18,7 +18,7 @@ fi
 
 # 检查时区设置
 if [ -z "$TZ" ]; then
-	echo "⚠️ 警告：TZ未设置，默认使用Asia/Shanghai"
+	echo "⚠️ 警告：TZ未设置，默认：Asia/Shanghai"
 	export TZ="Asia/Shanghai"
 fi
 ln -snf /usr/share/zoneinfo/$TZ /etc/localtime
@@ -26,21 +26,21 @@ echo $TZ >/etc/timezone
 
 # 检查定时任务设置
 if [ -z "$CRON" ]; then
-	echo "⚠️ 警告：CRON未设置，默认每日0时执行一次"
+	echo "⚠️ 警告：CRON未设置，默认：0 0 * * *"
 	export CRON="0 0 * * *"
 fi
 touch /var/log/imageporter.log
 echo "$CRON cd /app && ./imageporter.sh >> /var/log/imageporter.log 2>&1" >/app/imageporter.cron
 
 # 检查启动时运行设置
-if [ -z "$DISABLE_FIRSTRUN" ]; then
-	echo "⚠️ 警告：DISABLE_FIRSTRUN未设置，默认不在启动时运行"
-	export DISABLE_FIRSTRUN="false"
+if [ -z "$RUN_ONCE" ]; then
+	echo "⚠️ 警告：RUN_ONCE未设置，默认：false"
+	export RUN_ONCE="false"
 fi
 
 # 检查默认平台设置
 if [ -z "$DEFAULT_PLATFORM" ]; then
-	echo "⚠️ 警告：DEFAULT_PLATFORM未设置，默认使用linux/amd64"
+	echo "⚠️ 警告：DEFAULT_PLATFORM未设置，默认：linux/amd64"
 	export DEFAULT_PLATFORM="linux/amd64"
 fi
 
@@ -58,7 +58,7 @@ fi
 
 # 检查源仓库
 if [ -z "$SOURCE_REGISTRY" ]; then
-	echo "⚠️ 警告：SOURCE_REGISTRY未设置，默认为空"
+	echo "⚠️ 警告：SOURCE_REGISTRY未设置，默认：空"
 	export SOURCE_REGISTRY=""
 fi
 
@@ -71,16 +71,17 @@ fi
 echo "----------------------------------------"
 echo "$(date '+%Y-%m-%d %H:%M:%S')"
 
-if [ "$DISABLE_FIRSTRUN" != "true" ]; then
-	echo "🚀 已允许启动时运行，正在运行镜像同步任务"
+if [ "$RUN_ONCE" == "true" ]; then
+	echo "⚠️ 已设置仅运行一次，正在运行镜像同步任务"
 	/app/imageporter.sh
 	echo "----------------------------------------"
 	echo "$(date '+%Y-%m-%d %H:%M:%S')"
-	echo "✅ 已完成启动时运行服务"
-	echo "----------------------------------------"
-	echo "$(date '+%Y-%m-%d %H:%M:%S')"
+	echo "✅ 已完成一次镜像同步任务"
+	echo "⚠️ 已设置仅运行一次，正在退出"
+	exit 0
 fi
 
+echo "⚠️ 已禁用仅运行一次"
 echo "🚀 正在启动supercronic服务"
 supercronic --quiet /app/imageporter.cron &
 echo "✅ 成功启动supercronic服务"
