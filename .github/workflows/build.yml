@@ -1,9 +1,9 @@
-name: Build ImagePorter for Development
+name: Build ImagePorter Docker Image
 
 on:
   workflow_dispatch:
   push:
-    branches: [ dev ]
+    branches: [ main ]
 
 permissions:
   contents: read
