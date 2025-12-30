@@ -9,3 +9,8 @@ services:
     volumes:
       - ./images.json:/app/images.json:ro
       - ./accounts.json:/app/accounts.json:ro
+    environment:
+      TZ: "Asia/Shanghai"
+      CRON: "0 0 * * *"
+      RUN_ONCE: "true"
+      DRY_RUN: "true"
