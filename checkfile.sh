@@ -22,3 +22,11 @@ echo "✅ images.json文件检查通过"
 if [ ! -f accounts.json ]; then
 	echo "⚠️ 警告：accounts.json不存在"
 fi
+
+# 检查accounts.json文件格式是否正确
+if jq -e 'all(.[]; .username and .password and .registry)' accounts.json >/dev/null 2>&1; then
+	echo "✅ accounts.json格式正确"
+else
+	echo "❌ 错误：accounts.json格式不正确，缺少必要字段"
+	exit 1
+fi
