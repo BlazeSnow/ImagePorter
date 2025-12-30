@@ -12,7 +12,7 @@ ImagePorter是一个用于同步Docker镜像的Docker镜像，将docker.io、ghc
 1. 创建应用目录：`mkdir -p /srv/imageporter`
 2. 进入应用目录：`cd /srv/imageporter`
 3. 创建`docker-compose.yml`文件
-4. 创建`.env`文件
+4. 创建`accounts.json`文件
 5. 创建`images.json`文件
 6. 运行本软件：`docker compose up -d`
 
@@ -26,26 +26,29 @@ services:
     restart: no
     volumes:
       - ./images.json:/app/images.json:ro
-    env_file:
-      - .env
+      - ./accounts.json:/app/accounts.json:ro
+    environment:
+      TZ: "Asia/Shanghai"
+      CRON: "0 0 * * *"
+      RUN_ONCE: "false"
+      DRY_RUN: "false"
 ```
 
-### `.env`
+### `accounts.json`
 
-> [!TIP]
-> 此处标注的可选值均为默认值
-
-```env
-TZ="Asia/Shanghai"                # 可选：时区
-CRON="0 0 * * *"                  # 可选：运行计划
-RUN_ONCE="false"                  # 可选：运行一次后退出
-DEFAULT_PLATFORM="linux/amd64"    # 可选：镜像默认平台
-SOURCE_REGISTRY=""                # 可选：源仓库
-SOURCE_USERNAME=""                # 可选：源仓库用户名
-SOURCE_PASSWORD=""                # 可选：源仓库密码
-TARGET_REGISTRY="ghcr.io"         # ⚠️必选：目标仓库
-TARGET_USERNAME="blazesnow"       # ⚠️必选：目标仓库用户名
-TARGET_PASSWORD="PASSWORD"        # ⚠️必选：目标仓库密码
+```json
+[
+    {
+        "username": "blazesnow",
+        "password": "PASSWORD",
+        "registry": "ghcr.io"
+    },
+    {
+        "username": "blazesnow",
+        "password": "PASSWORD",
+        "registry": "docker.io"
+    }
+]
 ```
 
 ### `images.json`
@@ -54,13 +57,11 @@ TARGET_PASSWORD="PASSWORD"        # ⚠️必选：目标仓库密码
 [
     {
         "source": "hello-world:latest",
-        "target": "ghcr.io/blazesnow/hello-world:latest",
-        "platform": "linux/amd64"
+        "target": "ghcr.io/blazesnow/hello-world:latest"
     },
     {
         "source": "busybox:latest",
-        "target": "ghcr.io/blazesnow/busybox:latest",
-        "platform": "linux/amd64"
+        "target": "ghcr.io/blazesnow/busybox:latest"
     }
 ]
 ```
@@ -75,17 +76,14 @@ TARGET_PASSWORD="PASSWORD"        # ⚠️必选：目标仓库密码
 
 `images.json`的`target`
 
-### 镜像平台
-
-`images.json`的`platform`，若为空，取`.env`的`DEFAULT_PLATFORM`
-
 ## 运行逻辑
 
-1. 获取`.env`中的`SOURCE_REGISTRY`和`TARGET_REGISTRY`并登录
-2. 获取镜像列表
-3. 比较`target`的值有无重复
-4. 比较源镜像和目标镜像的`digest`值，若相同则跳过同步
-5. 使用`Crane`同步镜像
+1. 获取`accounts.json`中的仓库及账户密码
+2. 使用`crane`进行登录
+3. 获取镜像列表
+4. 比较`target`的值有无重复
+5. 比较源镜像和目标镜像的`digest`值，若相同则跳过同步
+6. 使用`Crane`同步镜像
 
 ## 许可证
 
