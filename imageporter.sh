@@ -38,7 +38,7 @@ for i in $(seq 0 $((count - 1))); do
 
 	# 同步镜像
 	echo "🔄 同步镜像"
-	if ! crane copy "$SOURCE" "$TARGET"; then
+	if ! crane copy --jobs 1 "$SOURCE" "$TARGET"; then
 		echo "❌ 镜像同步失败"
 		exit 1
 	fi
