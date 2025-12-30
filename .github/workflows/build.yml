@@ -1,9 +1,9 @@
-name: Build ImagePorter
+name: Build ImagePorter for Development
 
 on:
   workflow_dispatch:
   push:
-    branches: [ main ]
+    branches: [ dev ]
 
 permissions:
   contents: read
@@ -33,17 +33,17 @@ jobs:
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v3
 
-    - name: Go install
+    - name: Go build executables
       run: |
         CGO_ENABLED=0 go install github.com/google/go-containerregistry/cmd/crane@latest && \
         CGO_ENABLED=0 go install github.com/aptible/supercronic@latest
 
-    - name: Copy executable to workspace
+    - name: Copy executables to workspace
       run: |
         cp $HOME/go/bin/crane $GITHUB_WORKSPACE/crane && \
         cp $HOME/go/bin/supercronic $GITHUB_WORKSPACE/supercronic
 
-    - name: CHECK
+    - name: Check executables
       run: |
         ls -lh $GITHUB_WORKSPACE && \
         file $GITHUB_WORKSPACE/crane && \
