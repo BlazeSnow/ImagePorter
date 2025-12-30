@@ -30,4 +30,10 @@ if [ -z "$DRY_RUN" ]; then
 	export DRY_RUN="false"
 fi
 
+# 检查循环等待时间设置
+if [ -z "$SLEEP_TIME" ]; then
+	echo "⚠️ 警告：SLEEP_TIME未设置，默认：5"
+	export SLEEP_TIME="5"
+fi
+
 echo "✅ 环境变量检查完成"

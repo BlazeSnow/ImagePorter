@@ -12,7 +12,8 @@ LABEL version="2025.11.1.1"
 ENV TZ="Asia/Shanghai" \
     CRON="0 0 * * *" \
     RUN_ONCE="false" \
-    DRY_RUN="false"
+    DRY_RUN="false" \
+    SLEEP_TIME="5"
 
 # 安装依赖
 RUN apk --no-cache add jq tzdata

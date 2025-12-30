@@ -44,6 +44,10 @@ for i in $(seq 0 $((count - 1))); do
 	fi
 	echo "✅ 同步完成"
 
+	# 等待
+	echo "💤 等待 $SLEEP_TIME 秒后处理下一个镜像"
+	sleep "$SLEEP_TIME"
+
 done
 
 echo "----------------------------------------"
