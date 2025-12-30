@@ -1,5 +1,8 @@
 services:
   imageporter:
+    build:
+      context: .
+      dockerfile: Dockerfile
     image: imageporter/imageporter:dev
     container_name: imageporter
     restart: no
