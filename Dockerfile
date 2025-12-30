@@ -6,7 +6,7 @@ LABEL maintainer="hello@blazesnow.com"
 LABEL repository="https://github.com/blazesnow/ImagePorter"
 LABEL description="A simple container to port container images between registries using Crane."
 LABEL license="MIT"
-LABEL version="2025.11.1.1"
+LABEL version="2025.12.30.1"
 
 # 环境变量
 ENV TZ="Asia/Shanghai" \
