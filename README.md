@@ -41,7 +41,7 @@ services:
     {
         "username": "blazesnow",
         "password": "PASSWORD",
-        "registry": "ghcr.io"
+        "registry": "registry.cn-hangzhou.aliyuncs.com"
     },
     {
         "username": "blazesnow",
@@ -57,11 +57,11 @@ services:
 [
     {
         "source": "hello-world:latest",
-        "target": "ghcr.io/blazesnow/hello-world:latest"
+        "target": "registry.cn-hangzhou.aliyuncs.com/blazesnow/hello-world:latest"
     },
     {
         "source": "busybox:latest",
-        "target": "ghcr.io/blazesnow/busybox:latest"
+        "target": "registry.cn-hangzhou.aliyuncs.com/blazesnow/busybox:latest"
     }
 ]
 ```
