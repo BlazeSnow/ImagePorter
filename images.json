@@ -1,0 +1,10 @@
+[
+    {
+        "source": "hello-world:latest",
+        "target": "registry.cn-hangzhou.aliyuncs.com/blazesnow/hello-world:latest"
+    },
+    {
+        "source": "busybox:latest",
+        "target": "registry.cn-hangzhou.aliyuncs.com/blazesnow/busybox:latest"
+    }
+]
