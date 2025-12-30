@@ -13,8 +13,8 @@ for i in $(seq 0 $((count - 1))); do
 	TARGET="$(jq -r ".[$i].target" images.json)"
 
 	# 使用crane获取digest
-	SOURCE_digest=$(crane digest --platform="$PLATFORM" "$SOURCE" 2>/dev/null || true)
-	TARGET_digest=$(crane digest --platform="$PLATFORM" "$TARGET" 2>/dev/null || true)
+	SOURCE_digest=$(crane digest "$SOURCE" 2>/dev/null || true)
+	TARGET_digest=$(crane digest "$TARGET" 2>/dev/null || true)
 
 	# 分隔符
 	echo "----------------------------------------"

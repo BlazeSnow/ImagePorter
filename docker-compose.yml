@@ -13,4 +13,4 @@ services:
       TZ: "Asia/Shanghai"
       CRON: "0 0 * * *"
       RUN_ONCE: "true"
-      DRY_RUN: "true"
+      DRY_RUN: "false"
