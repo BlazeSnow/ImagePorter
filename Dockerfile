@@ -6,16 +6,10 @@ LABEL description="A simple container to port container images between registrie
 LABEL license="MIT"
 LABEL version="2025.11.1.1"
 
-ENV TZ="" \
-    CRON="" \
-    RUN_ONCE="" \
-    DEFAULT_PLATFORM="" \
-    SOURCE_REGISTRY="" \
-    SOURCE_USERNAME="" \
-    SOURCE_PASSWORD="" \
-    TARGET_REGISTRY="" \
-    TARGET_USERNAME="" \
-    TARGET_PASSWORD=""
+ENV TZ="Asia/Shanghai" \
+    CRON="0 0 * * *" \
+    RUN_ONCE="false" \
+    DRY_RUN="false"
 
 RUN apk --no-cache add jq tzdata
 

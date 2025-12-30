@@ -1,0 +1,10 @@
+[
+    {
+        "source": "hello-world:latest",
+        "target": "ghcr.io/blazesnow/hello-world:latest"
+    },
+    {
+        "source": "busybox:latest",
+        "target": "ghcr.io/blazesnow/busybox:latest"
+    }
+]

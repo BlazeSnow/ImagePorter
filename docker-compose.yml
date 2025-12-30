@@ -1,0 +1,8 @@
+services:
+  imageporter:
+    image: imageporter/imageporter:dev
+    container_name: imageporter
+    restart: no
+    volumes:
+      - ./images.json:/app/images.json:ro
+      - ./accounts.json:/app/accounts.json:ro
