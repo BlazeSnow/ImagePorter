@@ -16,7 +16,7 @@ for i in $(seq 0 $((count - 1))); do
 
 	# 登录目标仓库
 	log INFO "正在登录目标仓库: $REGISTRY"
-	echo "$PASSWORD" | crane auth login "$REGISTRY" -u "$USERNAME" --password-stdin
+	echo "$PASSWORD" | crane auth login "$REGISTRY" -u "$USERNAME" --password-stdin 2>/dev/null
 done
 
 log SUCCESS "所有目标仓库登录完成"
