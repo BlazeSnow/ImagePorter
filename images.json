@@ -6,5 +6,9 @@
     {
         "source": "busybox:latest",
         "target": "registry.cn-hangzhou.aliyuncs.com/blazesnow/busybox:latest"
+    },
+    {
+        "source": "dockurr/samba:latest",
+        "target": "registry.cn-hangzhou.aliyuncs.com/blazesnow/samba:latest"
     }
 ]

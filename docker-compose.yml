@@ -12,6 +12,6 @@ services:
     environment:
       TZ: "Asia/Shanghai"
       CRON: "* * * * *"
-      RUN_ONCE: "false"
-      DRY_RUN: "true"
+      RUN_ONCE: "true"
+      DRY_RUN: "false"
       SLEEP_TIME: "5"
