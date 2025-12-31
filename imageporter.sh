@@ -3,6 +3,9 @@
 set -e
 
 source /app/log.sh
+source /app/login.sh
+
+login
 
 # 镜像数量
 count=$(jq '. | length' images.json)

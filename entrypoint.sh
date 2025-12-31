@@ -17,9 +17,6 @@ log INFO "========================================"
 # 检查必要文件
 /app/checkfile.sh
 
-# 登录账户
-/app/login.sh
-
 # 开始运行
 
 if [ "$RUN_ONCE" == "true" ]; then
