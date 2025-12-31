@@ -16,7 +16,7 @@ ENV TZ="Asia/Shanghai" \
     SLEEP_TIME="5"
 
 # 安装依赖
-RUN apk --no-cache add jq tzdata
+RUN apk --no-cache add jq tzdata bash
 
 # 工作目录
 RUN mkdir -p /app

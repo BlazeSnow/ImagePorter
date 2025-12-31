@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 set -e
 
@@ -9,10 +9,15 @@ sync() {
 	local TARGET=$2
 	local message
 
-	message=$(GODEBUG=http2client=0 crane copy --jobs 1 "$SOURCE" "$TARGET" 2>&1 >/dev/null)
-	local status=$?
+	GODEBUG=http2client=0 crane copy "$SOURCE" "$TARGET" 2>&1 | while read -r line; do
+		if [[ $line == *"Pushed"* || $line == *"Already exists"* ]]; then
+			log INFO "进度: $line"
+		elif [[ $line == *"Error"* || $line == *"error"* ]]; then
+			log ERROR "$line"
+		fi
+	done
 
-	if [ $status -eq 0 ]; then
+	if [ ${PIPESTATUS[0]} -eq 0 ]; then
 		return 0
 	else
 		log "ERROR" "镜像同步失败：$message"
