@@ -48,8 +48,8 @@ for i in $(seq 0 $((count - 1))); do
 			success=true
 			break
 		fi
-		log WARNING "第 $attempt 次尝试失败，5秒后重试..."
-		sleep 5
+		log WARNING "第 $attempt 次尝试失败，$SLEEP_TIME 秒后重试..."
+		sleep "$SLEEP_TIME"
 	done
 
 	if [ "$success" = false ]; then
