@@ -11,6 +11,7 @@ services:
       - ./accounts.json:/app/accounts.json:ro
     environment:
       TZ: "Asia/Shanghai"
-      CRON: "0 0 * * *"
+      CRON: "* * * * *"
       RUN_ONCE: "true"
       DRY_RUN: "false"
+      SLEEP_TIME: "5"

@@ -32,6 +32,7 @@ services:
       CRON: "0 0 * * *"
       RUN_ONCE: "false"
       DRY_RUN: "false"
+      SLEEP_TIME: "5"
 ```
 
 ### `accounts.json`
@@ -71,6 +72,7 @@ services:
 1. `TZ`和`CRON`：共同作用于定时任务。
 2. `RUN_ONCE`：运行本镜像时，是否忽略定时任务，并运行一次后退出。
 3. `DRY_RUN`：跳过`crane`的同步操作，注意，本变量不可用于验证登录情况。
+4. `SLEEP_TIME`：同步一次镜像后的等待时间
 
 ## 镜像的命名方式
 

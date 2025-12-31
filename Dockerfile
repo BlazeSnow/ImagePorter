@@ -28,15 +28,17 @@ COPY supercronic /usr/local/bin/supercronic
 
 # 脚本文件
 COPY entrypoint.sh /app/entrypoint.sh
+COPY log.sh /app/log.sh
 COPY checkenv.sh /app/checkenv.sh
 COPY checkfile.sh /app/checkfile.sh
 COPY login.sh /app/login.sh
-COPY imageporter.sh /app/imageporter.sh 
+COPY imageporter.sh /app/imageporter.sh
 
 # 赋予执行权限
 RUN chmod +x /usr/local/bin/crane \
     && chmod +x /usr/local/bin/supercronic \
     && chmod +x /app/entrypoint.sh \
+    && chmod +x /app/log.sh \
     && chmod +x /app/checkenv.sh \
     && chmod +x /app/checkfile.sh \
     && chmod +x /app/login.sh \
