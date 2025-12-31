@@ -32,7 +32,7 @@ fi
 
 log WARNING "已禁用仅运行一次"
 log INFO "正在启动supercronic服务"
-supercronic --quiet /app/imageporter.cron &
-log INFO "成功启动supercronic服务"
+supercronic -quiet /app/imageporter.cron >/dev/null 2>&1 &
+log SUCCESS "成功启动supercronic服务"
 log INFO "正在监听log文件"
-tail -f /var/log/imageporter.log
+exec tail -f /var/log/imageporter.log

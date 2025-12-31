@@ -17,7 +17,7 @@ log() {
 	case "$LEVEL" in
 	"INFO") COLOR=$BLUE ;;
 	"SUCCESS") COLOR=$GREEN ;;
-	"WARN") COLOR=$YELLOW ;;
+	"WARNING") COLOR=$YELLOW ;;
 	"ERROR") COLOR=$RED ;;
 	"DEBUG") COLOR=$PURPLE ;;
 	*) COLOR=$NC ;;
