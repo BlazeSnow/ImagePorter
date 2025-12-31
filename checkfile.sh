@@ -18,7 +18,7 @@ if [ -n "$duplicate_targets" ]; then
 	exit 1
 fi
 
-log SUCCESS "images.json文件检查通过"
+log SUCCESS "images.json的target重复性检查通过"
 
 # 检查accounts.json文件是否存在
 if [ ! -f accounts.json ]; then
