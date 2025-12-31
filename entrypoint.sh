@@ -2,12 +2,14 @@
 
 set -e
 
+source /app/log.sh
+
 # 欢迎语
-echo "========================================"
-echo "🚀 欢迎使用 ImagePorter 镜像同步工具"
-echo "📚 文档地址：https://github.com/BlazeSnow/ImagePorter"
-echo "👨‍💻 作者：BlazeSnow"
-echo "========================================"
+log INFO "========================================"
+log INFO "欢迎使用 ImagePorter 镜像同步工具"
+log INFO "文档地址：https://github.com/BlazeSnow/ImagePorter"
+log INFO "作者：BlazeSnow"
+log INFO "========================================"
 
 # 检查环境变量
 /app/checkenv.sh
@@ -19,22 +21,18 @@ echo "========================================"
 /app/login.sh
 
 # 开始运行
-echo "----------------------------------------"
-echo "$(date '+%Y-%m-%d %H:%M:%S')"
 
 if [ "$RUN_ONCE" == "true" ]; then
-	echo "⚠️ 已设置仅运行一次，正在运行镜像同步任务"
+	log WARNING "已设置仅运行一次，正在运行镜像同步任务"
 	/app/imageporter.sh
-	echo "----------------------------------------"
-	echo "$(date '+%Y-%m-%d %H:%M:%S')"
-	echo "✅ 已完成一次镜像同步任务"
-	echo "⚠️ 已设置仅运行一次，正在退出"
+	log INFO "已完成一次镜像同步任务"
+	log WARNING "已设置仅运行一次，正在退出"
 	exit 0
 fi
 
-echo "⚠️ 已禁用仅运行一次"
-echo "🚀 正在启动supercronic服务"
+log WARNING "已禁用仅运行一次"
+log INFO "正在启动supercronic服务"
 supercronic --quiet /app/imageporter.cron &
-echo "✅ 成功启动supercronic服务"
-echo "🚀 正在监听log文件"
+log INFO "成功启动supercronic服务"
+log INFO "正在监听log文件"
 tail -f /var/log/imageporter.log

@@ -33,13 +33,27 @@ for i in $(seq 0 $((count - 1))); do
 	# 相同则跳过
 	if [ -n "$SOURCE_digest" ] && [ -n "$TARGET_digest" ] && [ "$SOURCE_digest" = "$TARGET_digest" ]; then
 		echo "✅ 源和目的地内容一致，跳过同步"
+
+		# 等待
+		echo "💤 等待 $SLEEP_TIME 秒后处理下一个镜像"
+		sleep "$SLEEP_TIME"
 		continue
 	fi
 
 	# 同步镜像
 	echo "🔄 同步镜像"
-	if ! crane copy --jobs 1 "$SOURCE" "$TARGET"; then
-		echo "❌ 镜像同步失败"
+	success=false
+	for attempt in 1 2 3; do
+		if GODEBUG=http2client=0 crane copy --jobs 1 "$SOURCE" "$TARGET"; then
+			success=true
+			break
+		fi
+		echo "⚠️ 第 $attempt 次尝试失败，5秒后重试..."
+		sleep 5
+	done
+
+	if [ "$success" = false ]; then
+		echo "❌ 镜像同步最终失败"
 		exit 1
 	fi
 	echo "✅ 同步完成"
