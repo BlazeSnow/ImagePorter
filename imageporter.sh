@@ -42,17 +42,17 @@ for i in $(seq 0 $((count - 1))); do
 
 	# 同步镜像
 	log INFO "同步镜像"
-	success=false
+	success="false"
 	for attempt in 1 2 3; do
 		if GODEBUG=http2client=0 crane copy --jobs 1 "$SOURCE" "$TARGET"; then
-			success=true
+			success="true"
 			break
 		fi
 		log WARNING "第 $attempt 次尝试失败，$SLEEP_TIME 秒后重试..."
 		sleep "$SLEEP_TIME"
 	done
 
-	if [ "$success" = false ]; then
+	if [ "$success" = "false" ]; then
 		log ERROR "镜像同步最终失败"
 		exit 1
 	fi
