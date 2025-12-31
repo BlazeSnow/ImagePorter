@@ -2,9 +2,11 @@
 
 set -e
 
+source /app/log.sh
+
 # 检查时区设置
 if [ -z "$TZ" ]; then
-	echo "⚠️ 警告：TZ未设置，默认：Asia/Shanghai"
+	log WARNING "TZ未设置，默认：Asia/Shanghai"
 	export TZ="Asia/Shanghai"
 fi
 ln -snf /usr/share/zoneinfo/$TZ /etc/localtime
@@ -12,7 +14,7 @@ echo $TZ >/etc/timezone
 
 # 检查定时任务设置
 if [ -z "$CRON" ]; then
-	echo "⚠️ 警告：CRON未设置，默认：0 0 * * *"
+	log WARNING "CRON未设置，默认：0 0 * * *"
 	export CRON="0 0 * * *"
 fi
 touch /var/log/imageporter.log
@@ -20,20 +22,20 @@ echo "$CRON cd /app && ./imageporter.sh >> /var/log/imageporter.log 2>&1" >/app/
 
 # 检查启动时运行设置
 if [ -z "$RUN_ONCE" ]; then
-	echo "⚠️ 警告：RUN_ONCE未设置，默认：false"
+	log WARNING "RUN_ONCE未设置，默认：false"
 	export RUN_ONCE="false"
 fi
 
 # 检查模拟运行设置
 if [ -z "$DRY_RUN" ]; then
-	echo "⚠️ 警告：DRY_RUN未设置，默认：false"
+	log WARNING "DRY_RUN未设置，默认：false"
 	export DRY_RUN="false"
 fi
 
 # 检查循环等待时间设置
 if [ -z "$SLEEP_TIME" ]; then
-	echo "⚠️ 警告：SLEEP_TIME未设置，默认：5"
+	log WARNING "SLEEP_TIME未设置，默认：5"
 	export SLEEP_TIME="5"
 fi
 
-echo "✅ 环境变量检查完成"
+log SUCCESS "环境变量检查完成"
