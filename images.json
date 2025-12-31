@@ -14,5 +14,9 @@
     {
         "source": "itzg/minecraft-server:latest",
         "target": "registry.cn-hangzhou.aliyuncs.com/blazesnow/minecraft-server:latest"
+    },
+    {
+        "source": "homeassistant/home-assistant:stable",
+        "target": "registry.cn-hangzhou.aliyuncs.com/blazesnow/home-assistant:stable"
     }
 ]

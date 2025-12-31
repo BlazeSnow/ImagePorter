@@ -1,26 +1,29 @@
 #!/bin/bash
 
-set -e
+set -o pipefail
 
 source /app/log.sh
 
 sync() {
 	local SOURCE=$1
 	local TARGET=$2
-	local message
 
-	GODEBUG=http2client=0 crane copy "$SOURCE" "$TARGET" 2>&1 | while read -r line; do
-		if [[ $line == *"Pushed"* || $line == *"Already exists"* ]]; then
-			log INFO "进度: $line"
-		elif [[ $line == *"Error"* || $line == *"error"* ]]; then
+	stdbuf -oL -eL GODEBUG=http2client=0 crane copy "$SOURCE" "$TARGET" 2>&1 | while read -r line; do
+		case "$line" in
+		*[Pp]ushed* | *[Cc]opying* | *[Ee]xists*)
+			log INFO "$line"
+			;;
+		*[Rr]etrying* | *[Ee]rror*)
 			log ERROR "$line"
-		fi
+			;;
+		esac
 	done
 
-	if [ ${PIPESTATUS[0]} -eq 0 ]; then
+	local exit_code=$?
+	if [ $exit_code -eq 0 ]; then
 		return 0
 	else
-		log "ERROR" "镜像同步失败：$message"
+		log "ERROR" "镜像同步失败"
 		return 1
 	fi
 }
