@@ -4,6 +4,7 @@ set -e
 
 source /app/log.sh
 source /app/login.sh
+source /app/sync.sh
 
 login
 
@@ -44,10 +45,10 @@ for i in $(seq 0 $((count - 1))); do
 	fi
 
 	# 同步镜像
-	log INFO "同步镜像"
+	log INFO "开始同步镜像"
 	success="false"
 	for attempt in 1 2 3; do
-		if GODEBUG=http2client=0 crane copy --jobs 1 "$SOURCE" "$TARGET"; then
+		if sync "$SOURCE" "$TARGET"; then
 			success="true"
 			break
 		fi

@@ -10,5 +10,9 @@
     {
         "source": "dockurr/samba:latest",
         "target": "registry.cn-hangzhou.aliyuncs.com/blazesnow/samba:latest"
+    },
+    {
+        "source": "itzg/minecraft-server:latest",
+        "target": "registry.cn-hangzhou.aliyuncs.com/blazesnow/minecraft-server:latest"
     }
 ]
