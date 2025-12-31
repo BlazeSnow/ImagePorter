@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 log() {
 	# 定义颜色代码
