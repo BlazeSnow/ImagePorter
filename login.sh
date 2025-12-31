@@ -2,10 +2,12 @@
 
 set -e
 
+source /app/log.sh
+
 # 账户数量
 count=$(jq '. | length' accounts.json)
 
-# 循环处理
+# 循环处理每个账户
 for i in $(seq 0 $((count - 1))); do
 	# 设定变量
 	USERNAME="$(jq -r ".[$i].username" accounts.json)"
@@ -13,8 +15,8 @@ for i in $(seq 0 $((count - 1))); do
 	REGISTRY="$(jq -r ".[$i].registry" accounts.json)"
 
 	# 登录目标仓库
-	echo "🚀 正在登录目标仓库: $REGISTRY"
-	crane auth login --username "$USERNAME" --password "$PASSWORD" "$REGISTRY"
+	log INFO "正在登录目标仓库: $REGISTRY"
+	echo "$PASSWORD" | crane auth login "$REGISTRY" -u "$USERNAME" --password-stdin
 done
 
-echo "✅ 所有目标仓库登录完成"
+log SUCCESS "所有目标仓库登录完成"
