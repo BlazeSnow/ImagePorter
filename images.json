@@ -4,7 +4,7 @@
         "target": "registry.cn-hangzhou.aliyuncs.com/blazesnow/hello-world:latest"
     },
     {
-        "source": "homeassistant/home-assistant:stable",
-        "target": "registry.cn-hangzhou.aliyuncs.com/blazesnow/home-assistant:stable"
+        "source": "openlistteam/openlist:latest",
+        "target": "registry.cn-hangzhou.aliyuncs.com/blazesnow/openlist:latest"
     }
 ]
