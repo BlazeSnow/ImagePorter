@@ -5,6 +5,8 @@ set -e
 source /app/log.sh
 source /app/login.sh
 
+failed_list=""
+
 login
 
 # 镜像数量
@@ -57,7 +59,8 @@ for i in $(seq 0 $((count - 1))); do
 
 	if [ "$success" = "false" ]; then
 		log ERROR "镜像同步最终失败"
-		exit 1
+		failed_list="$failed_list $TARGET"
+		continue
 	fi
 	log SUCCESS "同步完成"
 
@@ -66,6 +69,11 @@ for i in $(seq 0 $((count - 1))); do
 	sleep "$SLEEP_TIME"
 
 done
+
+if [ -n "$failed_list" ]; then
+	log ERROR "以下镜像同步失败: $failed_list"
+	exit 1
+fi
 
 log SUCCESS "========================================"
 log SUCCESS "全部镜像同步完成"
