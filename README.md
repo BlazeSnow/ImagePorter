@@ -4,47 +4,12 @@
 
 ImagePorter是一个用于同步Docker镜像的Docker镜像，将docker.io、ghcr.io、gcr.io等仓库的镜像同步至设定的目的地仓库。
 
-## 使用Docker run运行一次
-
-```shell
-docker run --rm \
-        -e "TZ=Asia/Shanghai" \
-        -e "RUN_ONCE=true" \
-        -e "DRY_RUN=false" \
-        -v "./images.json:/app/images.json:ro" \
-        -v "./accounts.json:/app/accounts.json:ro" \
-        imageporter/imageporter:latest
-```
-
-## 使用Docker Compose运行定时同步
+## 运行前准备
 
 1. 创建应用目录：`mkdir -p /srv/imageporter`
 2. 进入应用目录：`cd /srv/imageporter`
-3. 创建`docker-compose.yml`文件
-4. 创建`accounts.json`文件
-5. 创建`images.json`文件
-6. 运行本软件：`docker compose up -d`
-7. 查看日志：`docker logs imageporter -f`
-
-### `docker-compose.yml`
-
-```yml
-services:
-  imageporter:
-    image: imageporter/imageporter:latest
-    container_name: imageporter
-    restart: no
-    volumes:
-      - ./images.json:/app/images.json:ro
-      - ./accounts.json:/app/accounts.json:ro
-    environment:
-      TZ: "Asia/Shanghai"
-      CRON: "0 0 * * *"
-      RUN_ONCE: "false"
-      DRY_RUN: "false"
-      SLEEP_TIME: "5"
-      RETRY_DELAY_TIME: "5"
-```
+3. 创建`accounts.json`文件
+4. 创建`images.json`文件
 
 ### `accounts.json`
 
@@ -78,12 +43,54 @@ services:
 ]
 ```
 
+## 使用Docker run运行一次
+
+```shell
+cd /srv/imageporter
+
+docker run --rm \
+        -e "TZ=Asia/Shanghai" \
+        -e "RUN_ONCE=true" \
+        -e "DRY_RUN=false" \
+        -v "./images.json:/app/images.json:ro" \
+        -v "./accounts.json:/app/accounts.json:ro" \
+        imageporter/imageporter:latest
+```
+
+## 使用Docker Compose运行定时同步
+
+1. 进入应用目录：`cd /srv/imageporter`
+2. 创建`docker-compose.yml`文件
+3. 运行本软件：`docker compose up -d`
+4. 查看日志：`docker logs imageporter -f`
+
+### `docker-compose.yml`
+
+```yml
+services:
+  imageporter:
+    image: imageporter/imageporter:latest
+    container_name: imageporter
+    restart: no
+    volumes:
+      - ./images.json:/app/images.json:ro
+      - ./accounts.json:/app/accounts.json:ro
+    environment:
+      TZ: "Asia/Shanghai"
+      CRON: "0 0 * * *"
+      RUN_ONCE: "false"
+      DRY_RUN: "false"
+      SLEEP_TIME: "5"
+      RETRY_DELAY_TIME: "5"
+```
+
 ## 环境变量设计说明
 
 1. `TZ`和`CRON`：共同作用于定时任务。
 2. `RUN_ONCE`：运行本镜像时，是否忽略定时任务，并运行一次后退出。
 3. `DRY_RUN`：跳过`Crane`的同步操作，注意，本变量不可用于验证登录情况。
 4. `SLEEP_TIME`：同步一次镜像后的等待时间
+5. `RETRY_DELAY_TIME`：同步失败后重试的等待时间
 
 ## 镜像的命名方式
 
