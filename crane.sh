@@ -18,15 +18,15 @@ TEMP_TAR="/app/temp.tar"
 CraneAdvancedCopy() {
 	local SOURCE=$1
 	local TARGET=$2
-	crane pull "$SOURCE" "$TEMP_TAR" -v
-	crane push "$TEMP_TAR" "$TARGET" -v
+	crane pull "$SOURCE" "$TEMP_TAR"
+	crane push "$TEMP_TAR" "$TARGET"
 	rm -f "$TEMP_TAR"
 }
 
 CraneLegacyCopy() {
 	local SOURCE=$1
 	local TARGET=$2
-	crane pull "$SOURCE" "$TEMP_TAR" --format=legacy -v
-	crane push "$TEMP_TAR" "$TARGET" --format=legacy -v
+	crane pull "$SOURCE" "$TEMP_TAR" --format=legacy
+	crane push "$TEMP_TAR" "$TARGET" --format=legacy
 	rm -f "$TEMP_TAR"
 }

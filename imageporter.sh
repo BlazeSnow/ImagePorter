@@ -45,10 +45,10 @@ for i in $(seq 0 $((count - 1))); do
 	fi
 
 	# 同步镜像
-	log INFO "开始同步镜像"
 	success="false"
 	while [ "$success" = "false" ]; do
 		# 首次尝试同步
+		log INFO "开始同步镜像"
 		if CraneCopy "$SOURCE" "$TARGET"; then
 			success="true"
 			break
@@ -57,6 +57,7 @@ for i in $(seq 0 $((count - 1))); do
 		sleep "$SLEEP_TIME"
 
 		# 第二次尝试同步
+		log INFO "开始第二次尝试同步镜像，使用下载后上传方式，此方式需要较长时间"
 		if CraneAdvancedCopy "$SOURCE" "$TARGET"; then
 			success="true"
 			break
@@ -65,6 +66,7 @@ for i in $(seq 0 $((count - 1))); do
 		sleep "$SLEEP_TIME"
 
 		# 第三次尝试同步
+		log INFO "开始第三次尝试同步镜像，使用旧版格式，此方式需要较长时间"
 		if CraneLegacyCopy "$SOURCE" "$TARGET"; then
 			success="true"
 			break
