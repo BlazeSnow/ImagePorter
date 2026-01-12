@@ -5,7 +5,8 @@ on:
     inputs:
       tag:
         description: 'Release tag'
-        required: false
+        required: true
+        default: 'v2026.1.12.3'
 
 permissions:
   contents: write
@@ -39,18 +40,6 @@ jobs:
 
     - name: Build and push
       uses: docker/build-push-action@v6
-      if: github.ref == 'refs/heads/dev'
-      with:
-        context: .
-        push: true
-        platforms: linux/amd64,linux/arm64
-        tags: |
-          imageporter/imageporter:dev
-          ghcr.io/blazesnow/imageporter:dev
-
-    - name: Build and push
-      uses: docker/build-push-action@v6
-      if: inputs.tag != '' && github.ref == 'refs/heads/main'
       with:
         context: .
         push: true
@@ -58,11 +47,10 @@ jobs:
         tags: |
           imageporter/imageporter:${{ inputs.tag }}
           imageporter/imageporter:latest
-          ghcr.io/blazesnow/imageporter:${{ inputs.tag }}
-          ghcr.io/blazesnow/imageporter:latest
+          ghcr.io/imageporter/imageporter:${{ inputs.tag }}
+          ghcr.io/imageporter/imageporter:latest
 
     - uses: ncipollo/release-action@v1
-      if: inputs.tag != '' && github.ref == 'refs/heads/main'
       with:
         tag: ${{ inputs.tag }}
         bodyFile: ReleaseBodyFile.md

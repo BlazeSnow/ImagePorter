@@ -13,7 +13,7 @@ RUN go install github.com/aptible/supercronic@v0.2.41
 FROM alpine:latest
 
 # 开发信息
-LABEL repository="https://github.com/blazesnow/ImagePorter"
+LABEL repository="https://github.com/imageporter/ImagePorter"
 LABEL license="MIT"
 
 # 环境变量
