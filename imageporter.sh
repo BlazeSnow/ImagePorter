@@ -50,30 +50,31 @@ for i in $(seq 0 $((count - 1))); do
 	# 同步镜像
 	log INFO "开始同步镜像"
 	success="false"
-
-	# 首次尝试同步
-	if CraneCopy "$SOURCE" "$TARGET"; then
-		success="true"
-	else
+	while [ "$success" = "false" ]; do
+		# 首次尝试同步
+		if CraneCopy "$SOURCE" "$TARGET"; then
+			success="true"
+			break
+		fi
 		log WARNING "第一次尝试失败，等待 $SLEEP_TIME 秒后处理"
 		sleep "$SLEEP_TIME"
-	fi
 
-	# 第二次尝试同步
-	if [ "$success" = "false" ] && CraneAdvancedCopy "$SOURCE" "$TARGET"; then
-		success="true"
-	else
+		# 第二次尝试同步
+		if CraneAdvancedCopy "$SOURCE" "$TARGET"; then
+			success="true"
+			break
+		fi
 		log WARNING "第二次尝试失败，等待 $SLEEP_TIME 秒后处理"
 		sleep "$SLEEP_TIME"
-	fi
 
-	# 第三次尝试同步
-	if [ "$success" = "false" ] && CraneDebugCopy "$SOURCE" "$TARGET"; then
-		success="true"
-	else
-		log WARNING "第三次尝试失败，等待 $SLEEP_TIME 秒后处理"
-		sleep "$SLEEP_TIME"
-	fi
+		# 第三次尝试同步
+		if CraneDebugCopy "$SOURCE" "$TARGET"; then
+			success="true"
+			break
+		fi
+		log WARNING "第三次尝试失败"
+		break
+	done
 
 	# 同步多次后失败
 	if [ "$success" = "false" ]; then
@@ -83,10 +84,7 @@ for i in $(seq 0 $((count - 1))); do
 	fi
 
 	# 同步成功
-	log SUCCESS "同步完成"
-
-	# 等待
-	log INFO "等待 $SLEEP_TIME 秒后处理下一个镜像"
+	log SUCCESS "同步完成，等待 $SLEEP_TIME 秒后处理下一个镜像"
 	sleep "$SLEEP_TIME"
 
 done
