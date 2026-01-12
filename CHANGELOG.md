@@ -4,6 +4,9 @@
 
 1. 添加arm64支持
 2. 删去CGO_ENABLED=0参数
+3. 版本号固定：
+   1. crane@v0.20.7
+   2. supercronic@v0.2.41
 
 ## v2026.1.12.2
 
