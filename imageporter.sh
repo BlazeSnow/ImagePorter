@@ -50,15 +50,30 @@ for i in $(seq 0 $((count - 1))); do
 	# 同步镜像
 	log INFO "开始同步镜像"
 	success="false"
-	for attempt in 1 2 3; do
-		if CraneCopy "$SOURCE" "$TARGET"; then
-			success="true"
-			break
-		fi
-		log WARNING "第 $attempt 次尝试失败"
-		log INFO "等待 $SLEEP_TIME 秒后处理"
+
+	# 首次尝试同步
+	if CraneCopy "$SOURCE" "$TARGET"; then
+		success="true"
+	else
+		log WARNING "第一次尝试失败，等待 $SLEEP_TIME 秒后处理"
 		sleep "$SLEEP_TIME"
-	done
+	fi
+
+	# 第二次尝试同步
+	if [ "$success" = "false" ] && CraneAdvancedCopy "$SOURCE" "$TARGET"; then
+		success="true"
+	else
+		log WARNING "第二次尝试失败，等待 $SLEEP_TIME 秒后处理"
+		sleep "$SLEEP_TIME"
+	fi
+
+	# 第三次尝试同步
+	if [ "$success" = "false" ] && CraneDebugCopy "$SOURCE" "$TARGET"; then
+		success="true"
+	else
+		log WARNING "第三次尝试失败，等待 $SLEEP_TIME 秒后处理"
+		sleep "$SLEEP_TIME"
+	fi
 
 	# 同步多次后失败
 	if [ "$success" = "false" ]; then
