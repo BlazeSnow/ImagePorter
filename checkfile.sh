@@ -22,7 +22,8 @@ log SUCCESS "images.json的target重复性检查通过"
 
 # 检查accounts.json文件是否存在
 if [ ! -f accounts.json ]; then
-	log WARNING "accounts.json不存在"
+	log ERROR "accounts.json不存在"
+	exit 1
 fi
 
 # 检查accounts.json文件格式是否正确
