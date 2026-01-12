@@ -18,7 +18,9 @@ if [ -n "$duplicate_targets" ]; then
 	exit 1
 fi
 
-log SUCCESS "images.json的target重复性检查通过"
+log INFO "images.json的target重复性检查通过"
+
+log SUCCESS "images.json检查通过"
 
 # 检查accounts.json文件是否存在
 if [ ! -f accounts.json ]; then
@@ -28,8 +30,10 @@ fi
 
 # 检查accounts.json文件格式是否正确
 if jq -e 'all(.[]; .username and .password and .registry)' accounts.json >/dev/null 2>&1; then
-	log SUCCESS "accounts.json格式正确"
+	log INFO "accounts.json格式正确"
 else
 	log ERROR "accounts.json格式不正确，缺少必要字段"
 	exit 1
 fi
+
+log SUCCESS "accounts.json检查通过"
