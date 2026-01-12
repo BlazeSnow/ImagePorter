@@ -43,7 +43,7 @@ ImagePorter 是一个用于同步 Docker 镜像的 Docker 镜像，将 docker.io
 ]
 ```
 
-## 三、使用Docker run运行一次
+## 三、使用 Docker run 运行一次
 
 ```shell
 cd /srv/imageporter
@@ -57,10 +57,10 @@ docker run --rm \
         imageporter/imageporter:latest
 ```
 
-## 四、使用Docker Compose运行定时同步
+## 四、使用 Docker Compose 运行定时同步
 
 > [!TIP]
-> 推荐使用Docker Compose部署本软件
+> 推荐使用 Docker Compose 部署本软件
 
 1. 进入应用目录：`cd /srv/imageporter`
 2. 创建文件：`docker-compose.yml`

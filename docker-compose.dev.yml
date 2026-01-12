@@ -1,6 +1,6 @@
 services:
   imageporter:
-    image: imageporter/imageporter:latest
+    image: imageporter/imageporter:dev
     container_name: imageporter
     restart: no
     volumes:
@@ -9,7 +9,7 @@ services:
     environment:
       TZ: "Asia/Shanghai"
       CRON: "0 0 * * *"
-      RUN_ONCE: "false"
+      RUN_ONCE: "true"
       DRY_RUN: "false"
       SLEEP_TIME: "5"
       RETRY_DELAY_TIME: "5"

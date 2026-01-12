@@ -5,8 +5,7 @@ on:
     inputs:
       tag:
         description: 'Release tag'
-        required: true
-        default: 'v2026.1.12.1'
+        required: false
 
 permissions:
   contents: write
@@ -25,10 +24,12 @@ jobs:
         username: imageporter
         password: ${{ secrets.DockerHub_TOKEN }}
 
-    - name: Set up Golang
-      uses: actions/setup-go@v4
+    - name: Login to GitHub
+      uses: docker/login-action@v3
       with:
-        go-version: 'stable'
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v3
@@ -36,32 +37,32 @@ jobs:
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v3
 
-    - name: Go build executables
-      run: |
-        CGO_ENABLED=0 go install github.com/google/go-containerregistry/cmd/crane@latest && \
-        CGO_ENABLED=0 go install github.com/aptible/supercronic@latest
-
-    - name: Copy executables to workspace
-      run: |
-        cp $HOME/go/bin/crane $GITHUB_WORKSPACE/crane && \
-        cp $HOME/go/bin/supercronic $GITHUB_WORKSPACE/supercronic
-
-    - name: Check executables
-      run: |
-        ls -lh $GITHUB_WORKSPACE && \
-        file $GITHUB_WORKSPACE/crane && \
-        file $GITHUB_WORKSPACE/supercronic
-
     - name: Build and push
       uses: docker/build-push-action@v6
+      if: github.ref == 'refs/heads/dev'
       with:
         context: .
         push: true
+        platforms: linux/amd64,linux/arm64
         tags: |
-          imageporter/imageporter:latest
+          imageporter/imageporter:dev
+          ghcr.io/blazesnow/imageporter:dev
+
+    - name: Build and push
+      uses: docker/build-push-action@v6
+      if: inputs.tag != '' && github.ref == 'refs/heads/main'
+      with:
+        context: .
+        push: true
+        platforms: linux/amd64,linux/arm64
+        tags: |
           imageporter/imageporter:${{ inputs.tag }}
+          imageporter/imageporter:latest
+          ghcr.io/blazesnow/imageporter:${{ inputs.tag }}
+          ghcr.io/blazesnow/imageporter:latest
 
     - uses: ncipollo/release-action@v1
+      if: inputs.tag != '' && github.ref == 'refs/heads/main'
       with:
         tag: ${{ inputs.tag }}
         bodyFile: ReleaseBodyFile.md
