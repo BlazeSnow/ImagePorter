@@ -6,6 +6,8 @@ source /app/log.sh
 source /app/login.sh
 source /app/cranecopy.sh
 
+ARGS="$@"
+
 failed_list=""
 
 login
@@ -41,7 +43,7 @@ for i in $(seq 0 $((count - 1))); do
 		log SUCCESS "源和目的地内容一致，跳过同步"
 
 		# 等待
-		log INFO "等待 $SLEEP_TIME 秒后处理下一个镜像"
+		log INFO "等待 $SLEEP_TIME 秒后处理"
 		sleep "$SLEEP_TIME"
 		continue
 	fi
@@ -50,11 +52,12 @@ for i in $(seq 0 $((count - 1))); do
 	log INFO "开始同步镜像"
 	success="false"
 	for attempt in 1 2 3; do
-		if cranecopy "$SOURCE" "$TARGET" "$#"; then
+		if cranecopy "$SOURCE" "$TARGET" $ARGS; then
 			success="true"
 			break
 		fi
-		log WARNING "第 $attempt 次尝试失败，$SLEEP_TIME 秒后重试..."
+		log WARNING "第 $attempt 次尝试失败"
+		log WARNING "等待 $SLEEP_TIME 秒后处理"
 		sleep "$SLEEP_TIME"
 	done
 
