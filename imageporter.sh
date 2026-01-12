@@ -4,6 +4,7 @@ set -e
 
 source /app/log.sh
 source /app/login.sh
+source /app/cranecopy.sh
 
 failed_list=""
 
@@ -49,7 +50,7 @@ for i in $(seq 0 $((count - 1))); do
 	log INFO "开始同步镜像"
 	success="false"
 	for attempt in 1 2 3; do
-		if GODEBUG=http2client=0 crane copy --jobs 1 "$SOURCE" "$TARGET"; then
+		if cranecopy "$SOURCE" "$TARGET" "$#"; then
 			success="true"
 			break
 		fi

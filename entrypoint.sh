@@ -11,6 +11,16 @@ log INFO "文档地址：https://github.com/BlazeSnow/ImagePorter"
 log INFO "作者：BlazeSnow"
 log INFO "========================================"
 
+# 输出运行参数
+if [ $# -eq 0 ]; then
+	log INFO "未传入任何运行参数，将使用默认配置运行"
+else
+	log INFO "传入的运行参数如下："
+	for arg in "$@"; do
+		log INFO "$arg "
+	done
+fi
+
 # 检查环境变量
 /app/checkenv.sh
 
@@ -21,7 +31,7 @@ log INFO "========================================"
 
 if [ "$RUN_ONCE" == "true" ]; then
 	log WARNING "已设置仅运行一次，正在运行镜像同步任务"
-	/app/imageporter.sh
+	/app/imageporter.sh "$@"
 	log INFO "已完成一次镜像同步任务"
 	log WARNING "已设置仅运行一次，正在退出"
 	exit 0
