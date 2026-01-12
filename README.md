@@ -102,7 +102,7 @@ services:
 
 `images.json`的`target`
 
-## 运行逻辑
+## 七、运行逻辑
 
 1. 获取`accounts.json`中的仓库及账户密码
 2. 使用`Crane`进行登录
@@ -111,7 +111,7 @@ services:
 5. 比较源镜像和目标镜像的`digest`值，若相同则跳过同步
 6. 使用`Crane`同步镜像
 
-## 七、许可证
+## 八、许可证
 
 本软件使用 MIT 许可证
 
