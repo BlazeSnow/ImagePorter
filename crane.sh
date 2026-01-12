@@ -3,17 +3,12 @@
 set -e
 
 CraneDigest() {
-	IMAGE=$1
-	shift
-	ARGS="$@"
-	return crane digest --jobs 1 $ARGS "$IMAGE" 2>/dev/null || true
+	local IMAGE=$1
+	crane digest "$IMAGE" 2>/dev/null || true
 }
 
 CraneCopy() {
-	SOURCE=$1
-	TARGET=$2
-	shift 2
-	ARGS="$@"
-	crane copy --jobs 1 $ARGS "$SOURCE" "$TARGET"
-	return $?
+	local SOURCE=$1
+	local TARGET=$2
+	crane copy --jobs 1 $ARGS "$SOURCE" "$TARGET" 2>/dev/null || true
 }

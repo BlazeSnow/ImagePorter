@@ -15,4 +15,3 @@ services:
       RUN_ONCE: "true"
       DRY_RUN: "false"
       SLEEP_TIME: "5"
-    command: [ "--platform", "linux/amd64", "--dry-run" ]

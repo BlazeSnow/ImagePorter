@@ -6,8 +6,6 @@ source /app/log.sh
 source /app/login.sh
 source /app/crane.sh
 
-ARGS="$@"
-
 failed_list=""
 
 login
@@ -23,8 +21,8 @@ for i in $(seq 0 $((count - 1))); do
 	TARGET="$(jq -r ".[$i].target" images.json)"
 
 	# 使用crane获取digest
-	SOURCE_digest=$(CraneDigest "$SOURCE" $ARGS)
-	TARGET_digest=$(CraneDigest "$TARGET" $ARGS)
+	SOURCE_digest=$(CraneDigest "$SOURCE")
+	TARGET_digest=$(CraneDigest "$TARGET")
 
 	# 分隔符
 	log INFO "----------------------------------------"
@@ -53,7 +51,7 @@ for i in $(seq 0 $((count - 1))); do
 	log INFO "开始同步镜像"
 	success="false"
 	for attempt in 1 2 3; do
-		if [ CraneCopy "$SOURCE" "$TARGET" $ARGS = 0 ]; then
+		if [ CraneCopy "$SOURCE" "$TARGET" = 0 ]; then
 			success="true"
 			break
 		fi
