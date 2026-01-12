@@ -10,7 +10,8 @@ ENV TZ="Asia/Shanghai" \
     CRON="0 0 * * *" \
     RUN_ONCE="false" \
     DRY_RUN="false" \
-    SLEEP_TIME="5"
+    SLEEP_TIME="5" \
+    RETRY_DELAY_TIME="5"
 
 # 安装依赖
 RUN apk --no-cache add jq tzdata
@@ -30,6 +31,7 @@ COPY checkenv.sh /app/checkenv.sh
 COPY checkfile.sh /app/checkfile.sh
 COPY login.sh /app/login.sh
 COPY imageporter.sh /app/imageporter.sh
+COPY crane.sh /app/crane.sh
 
 # 赋予执行权限
 RUN chmod +x /usr/local/bin/crane \
@@ -39,7 +41,8 @@ RUN chmod +x /usr/local/bin/crane \
     && chmod +x /app/checkenv.sh \
     && chmod +x /app/checkfile.sh \
     && chmod +x /app/login.sh \
-    && chmod +x /app/imageporter.sh
+    && chmod +x /app/imageporter.sh \
+    && chmod +x /app/crane.sh
 
 # 启动命令
 ENTRYPOINT ["/app/entrypoint.sh"]

@@ -38,4 +38,10 @@ if [ -z "$SLEEP_TIME" ]; then
 	export SLEEP_TIME="5"
 fi
 
+# 检查重试等待时间设置
+if [ -z "$RETRY_DELAY_TIME" ]; then
+	log WARNING "RETRY_DELAY_TIME未设置，默认：5"
+	export RETRY_DELAY_TIME="5"
+fi
+
 log SUCCESS "环境变量检查完成"
