@@ -10,7 +10,8 @@ ENV TZ="Asia/Shanghai" \
     CRON="0 0 * * *" \
     RUN_ONCE="false" \
     DRY_RUN="false" \
-    SLEEP_TIME="5"
+    SLEEP_TIME="5" \
+    RETRY_DELAY_TIME="5"
 
 # 安装依赖
 RUN apk --no-cache add jq tzdata

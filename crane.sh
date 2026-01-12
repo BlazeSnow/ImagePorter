@@ -13,19 +13,10 @@ CraneCopy() {
 	crane copy --jobs 1 "$SOURCE" "$TARGET"
 }
 
-TEMP_TAR="/app/temp.tar"
-
 CraneAdvancedCopy() {
 	local SOURCE=$1
 	local TARGET=$2
-	crane pull "$SOURCE" "$TEMP_TAR" &&
-		crane push "$TEMP_TAR" "$TARGET" &&
-		rm -f "$TEMP_TAR"
-}
-
-CraneLegacyCopy() {
-	local SOURCE=$1
-	local TARGET=$2
+	local TEMP_TAR="/app/temp.tar"
 	crane pull "$SOURCE" "$TEMP_TAR" --format=legacy &&
 		crane push "$TEMP_TAR" "$TARGET" &&
 		rm -f "$TEMP_TAR"

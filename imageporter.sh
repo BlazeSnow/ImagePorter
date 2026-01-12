@@ -48,31 +48,32 @@ for i in $(seq 0 $((count - 1))); do
 	success="false"
 	while [ "$success" = "false" ]; do
 		# 首次尝试同步
-		log INFO "开始同步镜像"
+		log INFO "开始尝试同步镜像"
 		if CraneCopy "$SOURCE" "$TARGET"; then
 			success="true"
 			break
 		fi
-		log WARNING "第一次尝试失败，等待 $SLEEP_TIME 秒后处理"
-		sleep "$SLEEP_TIME"
+		log WARNING "第一次尝试失败，等待 $RETRY_DELAY_TIME 秒后处理"
+		sleep "$RETRY_DELAY_TIME"
 
 		# 第二次尝试同步
-		log INFO "开始第二次尝试同步镜像，使用下载后上传方式，此方式需要较长时间"
-		if CraneAdvancedCopy "$SOURCE" "$TARGET"; then
+		log INFO "开始第二次尝试同步镜像"
+		if CraneCopy "$SOURCE" "$TARGET"; then
 			success="true"
 			break
 		fi
-		log WARNING "第二次尝试失败，等待 $SLEEP_TIME 秒后处理"
-		sleep "$SLEEP_TIME"
+		log WARNING "第二次尝试失败，等待 $RETRY_DELAY_TIME 秒后处理"
+		sleep "$RETRY_DELAY_TIME"
 
 		# 第三次尝试同步
-		log INFO "开始第三次尝试同步镜像，使用旧版格式，此方式需要较长时间"
-		if CraneLegacyCopy "$SOURCE" "$TARGET"; then
+		log INFO "开始第三次尝试同步镜像，下载后上传，此方式需要较长时间"
+		if CraneAdvancedCopy "$SOURCE" "$TARGET"; then
 			success="true"
 			break
 		fi
 		log WARNING "第三次尝试失败"
 		break
+
 	done
 
 	# 同步多次后失败
