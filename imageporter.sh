@@ -4,7 +4,7 @@ set -e
 
 source /app/log.sh
 source /app/login.sh
-source /app/cranecopy.sh
+source /app/crane.sh
 
 ARGS="$@"
 
@@ -23,8 +23,8 @@ for i in $(seq 0 $((count - 1))); do
 	TARGET="$(jq -r ".[$i].target" images.json)"
 
 	# 使用crane获取digest
-	SOURCE_digest=$(crane digest "$SOURCE" 2>/dev/null || true)
-	TARGET_digest=$(crane digest "$TARGET" 2>/dev/null || true)
+	SOURCE_digest=$(CraneDigest "$SOURCE" $ARGS)
+	TARGET_digest=$(CraneDigest "$TARGET" $ARGS)
 
 	# 分隔符
 	log INFO "----------------------------------------"
@@ -32,6 +32,7 @@ for i in $(seq 0 $((count - 1))); do
 	log INFO "源哈希: $SOURCE_digest"
 	log INFO "目的地: $TARGET"
 	log INFO "目的地哈希: $TARGET_digest"
+
 	# 模拟运行
 	if [ "$DRY_RUN" == "true" ]; then
 		log WARNING "已设置模拟运行，跳过同步"
@@ -52,7 +53,7 @@ for i in $(seq 0 $((count - 1))); do
 	log INFO "开始同步镜像"
 	success="false"
 	for attempt in 1 2 3; do
-		if cranecopy "$SOURCE" "$TARGET" $ARGS; then
+		if [ CraneCopy "$SOURCE" "$TARGET" $ARGS = 0 ]; then
 			success="true"
 			break
 		fi
@@ -61,11 +62,14 @@ for i in $(seq 0 $((count - 1))); do
 		sleep "$SLEEP_TIME"
 	done
 
+	# 同步多次后失败
 	if [ "$success" = "false" ]; then
 		log ERROR "镜像同步最终失败"
 		failed_list="$failed_list $TARGET"
 		continue
 	fi
+
+	# 同步成功
 	log SUCCESS "同步完成"
 
 	# 等待

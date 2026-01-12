@@ -30,7 +30,7 @@ COPY checkenv.sh /app/checkenv.sh
 COPY checkfile.sh /app/checkfile.sh
 COPY login.sh /app/login.sh
 COPY imageporter.sh /app/imageporter.sh
-COPY cranecopy.sh /app/cranecopy.sh
+COPY crane.sh /app/crane.sh
 
 # 赋予执行权限
 RUN chmod +x /usr/local/bin/crane \
@@ -41,7 +41,7 @@ RUN chmod +x /usr/local/bin/crane \
     && chmod +x /app/checkfile.sh \
     && chmod +x /app/login.sh \
     && chmod +x /app/imageporter.sh \
-    && chmod +x /app/cranecopy.sh
+    && chmod +x /app/crane.sh
 
 # 启动命令
 ENTRYPOINT ["/app/entrypoint.sh"]
