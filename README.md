@@ -59,6 +59,9 @@ docker run --rm \
 
 ## 四、使用Docker Compose运行定时同步
 
+> [!TIP]
+> 推荐使用Docker Compose部署本软件
+
 1. 进入应用目录：`cd /srv/imageporter`
 2. 创建`docker-compose.yml`文件
 3. 运行本软件：`docker compose up -d`
