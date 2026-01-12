@@ -21,7 +21,7 @@ ImagePorter是一个用于同步Docker镜像的Docker镜像，将docker.io、ghc
 ```yml
 services:
   imageporter:
-    image: imageporter/imageporter:dev
+    image: imageporter/imageporter:latest
     container_name: imageporter
     restart: no
     volumes:
@@ -71,7 +71,7 @@ services:
 
 1. `TZ`和`CRON`：共同作用于定时任务。
 2. `RUN_ONCE`：运行本镜像时，是否忽略定时任务，并运行一次后退出。
-3. `DRY_RUN`：跳过`crane`的同步操作，注意，本变量不可用于验证登录情况。
+3. `DRY_RUN`：跳过`Crane`的同步操作，注意，本变量不可用于验证登录情况。
 4. `SLEEP_TIME`：同步一次镜像后的等待时间
 
 ## 镜像的命名方式
@@ -87,7 +87,7 @@ services:
 ## 运行逻辑
 
 1. 获取`accounts.json`中的仓库及账户密码
-2. 使用`crane`进行登录
+2. 使用`Crane`进行登录
 3. 获取镜像列表
 4. 比较`target`的值有无重复
 5. 比较源镜像和目标镜像的`digest`值，若相同则跳过同步

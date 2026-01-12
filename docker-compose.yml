@@ -3,7 +3,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: imageporter/imageporter:dev
+    image: imageporter/imageporter:latest
     container_name: imageporter
     restart: no
     volumes:

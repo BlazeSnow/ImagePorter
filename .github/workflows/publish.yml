@@ -1,9 +1,12 @@
-name: Build ImagePorter Docker Image
+name: Publish ImagePorter Docker Image
 
 on:
   workflow_dispatch:
-  push:
-    branches: [ main ]
+    inputs:
+      tag:
+        description: 'Release tag'
+        required: true
+        default: 'v2026.1.12.1'
 
 permissions:
   contents: read
@@ -54,4 +57,10 @@ jobs:
       with:
         context: .
         push: true
-        tags: imageporter/imageporter:dev
+        tags: |
+          imageporter/imageporter:latest
+          imageporter/imageporter:${{ inputs.tag }}
+
+    - uses: ncipollo/release-action@v1
+      with:
+        tag: ${{ inputs.tag }}
