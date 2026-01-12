@@ -51,12 +51,12 @@ for i in $(seq 0 $((count - 1))); do
 	log INFO "开始同步镜像"
 	success="false"
 	for attempt in 1 2 3; do
-		if [ CraneCopy "$SOURCE" "$TARGET" = 0 ]; then
+		if CraneCopy "$SOURCE" "$TARGET"; then
 			success="true"
 			break
 		fi
 		log WARNING "第 $attempt 次尝试失败"
-		log WARNING "等待 $SLEEP_TIME 秒后处理"
+		log INFO "等待 $SLEEP_TIME 秒后处理"
 		sleep "$SLEEP_TIME"
 	done
 
