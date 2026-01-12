@@ -6,7 +6,7 @@ on:
       tag:
         description: 'Release tag'
         required: true
-        default: 'v2026.1.12.1'
+        default: 'v2026.1.12.3'
 
 permissions:
   contents: write
@@ -25,38 +25,18 @@ jobs:
         username: imageporter
         password: ${{ secrets.DockerHub_TOKEN }}
 
-    - name: Set up Golang
-      uses: actions/setup-go@v4
-      with:
-        go-version: 'stable'
-
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v3
 
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v3
 
-    - name: Go build executables
-      run: |
-        CGO_ENABLED=0 go install github.com/google/go-containerregistry/cmd/crane@latest && \
-        CGO_ENABLED=0 go install github.com/aptible/supercronic@latest
-
-    - name: Copy executables to workspace
-      run: |
-        cp $HOME/go/bin/crane $GITHUB_WORKSPACE/crane && \
-        cp $HOME/go/bin/supercronic $GITHUB_WORKSPACE/supercronic
-
-    - name: Check executables
-      run: |
-        ls -lh $GITHUB_WORKSPACE && \
-        file $GITHUB_WORKSPACE/crane && \
-        file $GITHUB_WORKSPACE/supercronic
-
     - name: Build and push
       uses: docker/build-push-action@v6
       with:
         context: .
         push: true
+        platforms: linux/amd64,linux/arm64
         tags: |
           imageporter/imageporter:latest
           imageporter/imageporter:${{ inputs.tag }}

@@ -1,4 +1,13 @@
 # 构建镜像
+FROM golang:alpine AS builder
+
+# 构建crane工具
+RUN CGO_ENABLED=0 go install github.com/google/go-containerregistry/cmd/crane@latest
+
+# 构建supercronic工具
+RUN CGO_ENABLED=0 go install github.com/aptible/supercronic@latest
+
+# 运行镜像
 FROM alpine:latest
 
 # 开发信息
@@ -21,8 +30,8 @@ RUN mkdir -p /app
 WORKDIR /app
 
 # 可执行文件
-COPY crane /usr/local/bin/crane
-COPY supercronic /usr/local/bin/supercronic
+COPY --from=builder /go/bin/crane /usr/local/bin/crane
+COPY --from=builder /go/bin/supercronic /usr/local/bin/supercronic
 
 # 脚本文件
 COPY entrypoint.sh /app/entrypoint.sh
@@ -43,6 +52,9 @@ RUN chmod +x /usr/local/bin/crane \
     && chmod +x /app/login.sh \
     && chmod +x /app/imageporter.sh \
     && chmod +x /app/crane.sh
+
+# 验证工具
+RUN crane version && supercronic -version
 
 # 启动命令
 ENTRYPOINT ["/app/entrypoint.sh"]
