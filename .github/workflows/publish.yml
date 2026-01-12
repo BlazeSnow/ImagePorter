@@ -1,6 +1,10 @@
 name: Publish ImagePorter Docker Image
 
 on:
+  push:
+    branches:
+    - main
+    - dev
   workflow_dispatch:
     inputs:
       tag:
@@ -33,6 +37,18 @@ jobs:
 
     - name: Build and push
       uses: docker/build-push-action@v6
+      if: github.ref == 'refs/heads/dev'
+      with:
+        context: .
+        push: true
+        platforms: linux/amd64,linux/arm64
+        tags: |
+          imageporter/imageporter:${{ inputs.tag }}
+          imageporter/imageporter:latest
+
+    - name: Build and push
+      uses: docker/build-push-action@v6
+      if: github.ref == 'refs/heads/main'
       with:
         context: .
         push: true
@@ -42,6 +58,7 @@ jobs:
           imageporter/imageporter:latest
 
     - uses: ncipollo/release-action@v1
+      if: github.ref == 'refs/heads/main'
       with:
         tag: ${{ inputs.tag }}
         bodyFile: ReleaseBodyFile.md

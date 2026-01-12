@@ -2,10 +2,10 @@
 FROM golang:alpine AS builder
 
 # 构建crane工具
-RUN CGO_ENABLED=0 go install github.com/google/go-containerregistry/cmd/crane@latest
+RUN go install github.com/google/go-containerregistry/cmd/crane@latest
 
 # 构建supercronic工具
-RUN CGO_ENABLED=0 go install github.com/aptible/supercronic@latest
+RUN go install github.com/aptible/supercronic@latest
 
 # 运行镜像
 FROM alpine:latest
