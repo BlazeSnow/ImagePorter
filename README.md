@@ -1,10 +1,10 @@
 # ImagePorter
 
-## 软件说明
+## 一、软件说明
 
 ImagePorter是一个用于同步Docker镜像的Docker镜像，将docker.io、ghcr.io、gcr.io等仓库的镜像同步至设定的目的地仓库。
 
-## 运行前准备
+## 二、运行前准备
 
 1. 创建应用目录：`mkdir -p /srv/imageporter`
 2. 进入应用目录：`cd /srv/imageporter`
@@ -43,7 +43,7 @@ ImagePorter是一个用于同步Docker镜像的Docker镜像，将docker.io、ghc
 ]
 ```
 
-## 使用Docker run运行一次
+## 三、使用Docker run运行一次
 
 ```shell
 cd /srv/imageporter
@@ -57,7 +57,7 @@ docker run --rm \
         imageporter/imageporter:latest
 ```
 
-## 使用Docker Compose运行定时同步
+## 四、使用Docker Compose运行定时同步
 
 1. 进入应用目录：`cd /srv/imageporter`
 2. 创建`docker-compose.yml`文件
@@ -84,7 +84,7 @@ services:
       RETRY_DELAY_TIME: "5"
 ```
 
-## 环境变量设计说明
+## 五、环境变量设计说明
 
 1. `TZ`和`CRON`：共同作用于定时任务。
 2. `RUN_ONCE`：运行本镜像时，是否忽略定时任务，并运行一次后退出。
@@ -92,7 +92,7 @@ services:
 4. `SLEEP_TIME`：同步一次镜像后的等待时间
 5. `RETRY_DELAY_TIME`：同步失败后重试的等待时间
 
-## 镜像的命名方式
+## 六、镜像的命名方式
 
 ### 源仓库的镜像
 
@@ -111,7 +111,7 @@ services:
 5. 比较源镜像和目标镜像的`digest`值，若相同则跳过同步
 6. 使用`Crane`同步镜像
 
-## 许可证
+## 七、许可证
 
 本软件使用 MIT 许可证
 
