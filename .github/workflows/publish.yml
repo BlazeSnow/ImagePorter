@@ -1,15 +1,11 @@
 name: Publish ImagePorter Docker Image
 
 on:
-  push:
-    branches:
-    - dev
   workflow_dispatch:
     inputs:
       tag:
         description: 'Release tag'
-        required: true
-        default: 'v2026.1.12.3'
+        required: false
 
 permissions:
   contents: write
@@ -28,6 +24,14 @@ jobs:
         username: imageporter
         password: ${{ secrets.DockerHub_TOKEN }}
 
+    - name: Login to GitHub
+      if: env.should_build == 'true'
+      uses: docker/login-action@v3
+      with:
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v3
 
@@ -43,6 +47,7 @@ jobs:
         platforms: linux/amd64,linux/arm64
         tags: |
           imageporter/imageporter:dev
+          ghcr.io/blazesnow/imageporter:dev
 
     - name: Build and push
       uses: docker/build-push-action@v6
@@ -54,6 +59,8 @@ jobs:
         tags: |
           imageporter/imageporter:${{ inputs.tag }}
           imageporter/imageporter:latest
+          ghcr.io/blazesnow/imageporter:${{ inputs.tag }}
+          ghcr.io/blazesnow/imageporter:latest
 
     - uses: ncipollo/release-action@v1
       if: inputs.tag != '' && github.ref == 'refs/heads/main'
