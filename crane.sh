@@ -10,5 +10,5 @@ CraneDigest() {
 CraneCopy() {
 	local SOURCE=$1
 	local TARGET=$2
-	crane copy --jobs 1 $ARGS "$SOURCE" "$TARGET" 2>/dev/null || true
+	crane copy --jobs 1 "$SOURCE" "$TARGET"
 }
