@@ -39,10 +39,7 @@ for i in $(seq 0 $((count - 1))); do
 
 	# 相同则跳过
 	if [ -n "$SOURCE_digest" ] && [ -n "$TARGET_digest" ] && [ "$SOURCE_digest" = "$TARGET_digest" ]; then
-		log SUCCESS "源和目的地内容一致，跳过同步"
-
-		# 等待
-		log INFO "等待 $SLEEP_TIME 秒后处理"
+		log SUCCESS "源和目的地内容一致，跳过同步，等待 $SLEEP_TIME 秒后处理"
 		sleep "$SLEEP_TIME"
 		continue
 	fi
