@@ -4,10 +4,19 @@
 
 ImagePorter是一个用于同步Docker镜像的Docker镜像，将docker.io、ghcr.io、gcr.io等仓库的镜像同步至设定的目的地仓库。
 
-## 使用说明
+## 使用Docker run运行一次
 
-> [!TIP]
-> 推荐使用Docker Compose部署本软件
+```shell
+docker run --rm \
+        -e "TZ=Asia/Shanghai" \
+        -e "RUN_ONCE=true" \
+        -e "DRY_RUN=false" \
+        -v "./images.json:/app/images.json:ro" \
+        -v "./accounts.json:/app/accounts.json:ro" \
+        imageporter/imageporter:latest
+```
+
+## 使用Docker Compose运行定时同步
 
 1. 创建应用目录：`mkdir -p /srv/imageporter`
 2. 进入应用目录：`cd /srv/imageporter`
@@ -15,6 +24,7 @@ ImagePorter是一个用于同步Docker镜像的Docker镜像，将docker.io、ghc
 4. 创建`accounts.json`文件
 5. 创建`images.json`文件
 6. 运行本软件：`docker compose up -d`
+7. 查看日志：`docker logs imageporter -f`
 
 ### `docker-compose.yml`
 
@@ -33,6 +43,7 @@ services:
       RUN_ONCE: "false"
       DRY_RUN: "false"
       SLEEP_TIME: "5"
+      RETRY_DELAY_TIME: "5"
 ```
 
 ### `accounts.json`
