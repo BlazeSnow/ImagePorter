@@ -38,8 +38,8 @@ jobs:
         push: true
         platforms: linux/amd64,linux/arm64
         tags: |
-          imageporter/imageporter:latest
           imageporter/imageporter:${{ inputs.tag }}
+          imageporter/imageporter:latest
 
     - uses: ncipollo/release-action@v1
       with:
