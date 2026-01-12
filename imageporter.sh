@@ -68,7 +68,7 @@ for i in $(seq 0 $((count - 1))); do
 		sleep "$SLEEP_TIME"
 
 		# 第三次尝试同步
-		if CraneDebugCopy "$SOURCE" "$TARGET"; then
+		if CraneLegacyCopy "$SOURCE" "$TARGET"; then
 			success="true"
 			break
 		fi
