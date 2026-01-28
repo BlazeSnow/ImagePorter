@@ -1,5 +1,11 @@
 # ImagePorter
 
+![Docker Pulls](https://img.shields.io/docker/pulls/imageporter/imageporter?style=for-the-badge)
+![Docker Image Size](https://img.shields.io/docker/image-size/imageporter/imageporter?style=for-the-badge)
+![GitHub last commit (branch)](https://img.shields.io/github/last-commit/imageporter/imageporter/main?style=for-the-badge)
+![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/imageporter/imageporter/publish.yml?style=for-the-badge)
+![GitHub License](https://img.shields.io/github/license/imageporter/imageporter?style=for-the-badge)
+
 ## 一、软件说明
 
 ImagePorter 是一个用于同步 Docker 镜像的 Docker 镜像，将 docker.io、ghcr.io、gcr.io 等仓库的镜像同步至设定的目的地仓库。
