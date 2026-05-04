@@ -55,6 +55,7 @@ jobs:
         for arch in amd64 arm64; do
           export GOOS=linux
           export GOARCH="${arch}"
+          export CGO_ENABLED=0
           unset GOBIN
 
           go install github.com/google/go-containerregistry/cmd/crane@v0.21.5
