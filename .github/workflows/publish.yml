@@ -55,8 +55,8 @@ jobs:
           export GOBIN="${PWD}/bin/${GOOS}_${GOARCH}"
 
           mkdir -p "${GOBIN}"
-          go install github.com/google/go-containerregistry/cmd/crane@v0.20.7
-          go install github.com/aptible/supercronic@v0.2.41
+          go install github.com/google/go-containerregistry/cmd/crane@v0.21.5
+          go install github.com/aptible/supercronic@v0.2.45
           chmod +x "${GOBIN}/crane" "${GOBIN}/supercronic"
         done
 
