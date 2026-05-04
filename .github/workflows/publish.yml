@@ -38,6 +38,28 @@ jobs:
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v3
 
+    - name: Set up Go
+      uses: actions/setup-go@v6
+      with:
+        go-version: stable
+        cache: false
+
+    - name: Build tools
+      shell: bash
+      run: |
+        set -euo pipefail
+
+        for arch in amd64 arm64; do
+          export GOOS=linux
+          export GOARCH="${arch}"
+          export GOBIN="${PWD}/bin/${GOOS}_${GOARCH}"
+
+          mkdir -p "${GOBIN}"
+          go install github.com/google/go-containerregistry/cmd/crane@v0.20.7
+          go install github.com/aptible/supercronic@v0.2.41
+          chmod +x "${GOBIN}/crane" "${GOBIN}/supercronic"
+        done
+
     - name: Build and push
       uses: docker/build-push-action@v6
       with:

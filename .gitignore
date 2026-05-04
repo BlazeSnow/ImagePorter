@@ -1,4 +1,5 @@
 crane
 supercronic
+bin/
 *.env
 accounts.json
