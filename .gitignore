@@ -1,7 +1,5 @@
-# 可执行文件
 crane
 supercronic
-
-# 隐私配置文件
-.env
+bin/
+*.env
 accounts.json
