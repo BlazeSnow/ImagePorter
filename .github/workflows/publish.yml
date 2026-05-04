@@ -49,15 +49,27 @@ jobs:
       run: |
         set -euo pipefail
 
+        export GOPATH="${PWD}/.gopath"
+        host_platform="$(go env GOHOSTOS)_$(go env GOHOSTARCH)"
+
         for arch in amd64 arm64; do
           export GOOS=linux
           export GOARCH="${arch}"
-          export GOBIN="${PWD}/bin/${GOOS}_${GOARCH}"
+          unset GOBIN
 
-          mkdir -p "${GOBIN}"
           go install github.com/google/go-containerregistry/cmd/crane@v0.21.5
           go install github.com/aptible/supercronic@v0.2.45
-          chmod +x "${GOBIN}/crane" "${GOBIN}/supercronic"
+
+          install_dir="${GOPATH}/bin"
+          if [ "${GOOS}_${GOARCH}" != "${host_platform}" ]; then
+            install_dir="${install_dir}/${GOOS}_${GOARCH}"
+          fi
+
+          target_dir="${PWD}/bin/${GOOS}_${GOARCH}"
+          mkdir -p "${target_dir}"
+          cp "${install_dir}/crane" "${target_dir}/crane"
+          cp "${install_dir}/supercronic" "${target_dir}/supercronic"
+          chmod +x "${target_dir}/crane" "${target_dir}/supercronic"
         done
 
     - name: Build and push
