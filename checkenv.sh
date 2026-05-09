@@ -9,13 +9,17 @@ if [ -z "$TZ" ]; then
 	log WARNING "TZ未设置，默认：Asia/Shanghai"
 	export TZ="Asia/Shanghai"
 fi
-ln -snf /usr/share/zoneinfo/$TZ /etc/localtime
-echo $TZ >/etc/timezone
+ln -snf "/usr/share/zoneinfo/$TZ" /etc/localtime
+echo "$TZ" >/etc/timezone
 
 # 检查定时任务设置
 if [ -z "$CRON" ]; then
 	log WARNING "CRON未设置，默认：0 0 * * *"
 	export CRON="0 0 * * *"
+fi
+if [[ ! "$CRON" =~ ^[^[:space:]]+[[:space:]]+[^[:space:]]+[[:space:]]+[^[:space:]]+[[:space:]]+[^[:space:]]+[[:space:]]+[^[:space:]]+$ ]]; then
+	log ERROR "CRON格式不正确，应为5段cron表达式"
+	exit 1
 fi
 touch /var/log/imageporter.log
 echo "$CRON cd /app && ./imageporter.sh >> /var/log/imageporter.log 2>&1" >/app/imageporter.cron
