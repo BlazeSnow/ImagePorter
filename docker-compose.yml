@@ -1,6 +1,6 @@
 services:
   imageporter:
-    image: imageporter/imageporter:latest
+    image: imageporter/imageporter:beta
     container_name: imageporter
     restart: no
     volumes:
