@@ -7,8 +7,8 @@ source /app/log.sh
 # 欢迎语
 log INFO "========================================"
 log INFO "欢迎使用 ImagePorter 镜像同步工具"
-log INFO "文档地址：https://github.com/imageporter/ImagePorter"
-log INFO "作者：BlazeSnow"
+log INFO "文档地址：https://www.blazesnow.com/imageporter/"
+log INFO "仓库地址：https://github.com/imageporter/ImagePorter"
 log INFO "========================================"
 
 # 检查环境变量
