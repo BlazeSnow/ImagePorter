@@ -12,6 +12,7 @@
 8. CI改为下载预构建工具
 9. CI下载工具时添加完整性校验
 10. CI校验supercronic校验值格式
+11. CI发布beta版时将GitHub Release标记为预发布
 
 ## v2026.5.4.0
 
