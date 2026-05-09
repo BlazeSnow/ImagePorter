@@ -7,6 +7,11 @@ on:
         description: 'Release tag'
         required: true
         default: 'v0.0.0.0'
+      beta:
+        description: 'Publish beta image tag'
+        required: true
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -69,17 +74,33 @@ jobs:
           chmod +x "${target_dir}/crane" "${target_dir}/supercronic"
         done
 
+    - name: Generate image tags
+      id: image-tags
+      shell: bash
+      run: |
+        set -euo pipefail
+
+        {
+          echo "tags<<EOF"
+          echo "imageporter/imageporter:${{ inputs.tag }}"
+          echo "ghcr.io/imageporter/imageporter:${{ inputs.tag }}"
+          if [ "${{ inputs.beta }}" = "true" ]; then
+            echo "imageporter/imageporter:beta"
+            echo "ghcr.io/imageporter/imageporter:beta"
+          else
+            echo "imageporter/imageporter:latest"
+            echo "ghcr.io/imageporter/imageporter:latest"
+          fi
+          echo "EOF"
+        } >> "$GITHUB_OUTPUT"
+
     - name: Build and push
       uses: docker/build-push-action@v7
       with:
         context: .
         push: true
         platforms: linux/amd64,linux/arm64
-        tags: |
-          imageporter/imageporter:${{ inputs.tag }}
-          imageporter/imageporter:latest
-          ghcr.io/imageporter/imageporter:${{ inputs.tag }}
-          ghcr.io/imageporter/imageporter:latest
+        tags: ${{ steps.image-tags.outputs.tags }}
 
     - uses: ncipollo/release-action@v1
       with:
