@@ -1,5 +1,12 @@
 # 更新日志
 
+## v2026.5.9.0
+
+1. 添加bash运行环境
+2. 将脚本解释器切换为bash
+3. 统一GitHub仓库地址
+4. 添加images.json的source和target字段检查
+
 ## v2026.5.4.0
 
 1. 更新crane@v0.21.5
