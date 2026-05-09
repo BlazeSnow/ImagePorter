@@ -1,5 +1,5 @@
 # 运行镜像
-FROM alpine:latest
+FROM alpine:3.23
 
 ARG TARGETOS=linux
 ARG TARGETARCH=amd64
@@ -17,7 +17,7 @@ ENV TZ="Asia/Shanghai" \
     RETRY_DELAY_TIME="5"
 
 # 安装依赖
-RUN apk --no-cache add jq tzdata
+RUN apk --no-cache add bash jq tzdata
 
 # 工作目录
 RUN mkdir -p /app

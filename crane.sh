@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 set -e
 
@@ -17,7 +17,11 @@ CraneAdvancedCopy() {
 	local SOURCE=$1
 	local TARGET=$2
 	local TEMP_TAR="/app/temp.tar"
+	local STATUS=0
+
 	crane pull "$SOURCE" "$TEMP_TAR" --format=legacy &&
-		crane push "$TEMP_TAR" "$TARGET" &&
-		rm -f "$TEMP_TAR"
+		crane push "$TEMP_TAR" "$TARGET" || STATUS=$?
+
+	rm -f "$TEMP_TAR"
+	return "$STATUS"
 }

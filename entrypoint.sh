@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 set -e
 
@@ -7,7 +7,7 @@ source /app/log.sh
 # 欢迎语
 log INFO "========================================"
 log INFO "欢迎使用 ImagePorter 镜像同步工具"
-log INFO "文档地址：https://github.com/BlazeSnow/ImagePorter"
+log INFO "文档地址：https://github.com/imageporter/ImagePorter"
 log INFO "作者：BlazeSnow"
 log INFO "========================================"
 
