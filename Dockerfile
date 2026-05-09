@@ -3,7 +3,7 @@ FROM alpine:3.23
 
 ARG TARGETOS=linux
 ARG TARGETARCH=amd64
-ARG VERSION="unknown"
+ARG VERSION=unknown
 
 # 开发信息
 LABEL org.opencontainers.image.documentation="https://www.blazesnow.com/imageporter/"
