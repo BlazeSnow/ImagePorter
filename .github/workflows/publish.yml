@@ -52,6 +52,11 @@ jobs:
       run: |
         set -euo pipefail
 
+        crane_checksums="go-containerregistry-checksums.txt"
+        curl -fsSL \
+          "https://github.com/google/go-containerregistry/releases/download/${CRANE_VERSION}/checksums.txt" \
+          -o "${crane_checksums}"
+
         for arch in amd64 arm64; do
           case "${arch}" in
             amd64) crane_arch="x86_64" ;;
@@ -61,18 +66,32 @@ jobs:
           target_dir="${PWD}/bin/linux_${arch}"
           mkdir -p "${target_dir}"
 
+          crane_archive="go-containerregistry_Linux_${crane_arch}.tar.gz"
           curl -fsSL \
-            "https://github.com/google/go-containerregistry/releases/download/${CRANE_VERSION}/go-containerregistry_Linux_${crane_arch}.tar.gz" \
-            -o go-containerregistry.tar.gz
-          tar -xzf go-containerregistry.tar.gz -C "${target_dir}" crane
-          rm -f go-containerregistry.tar.gz
+            "https://github.com/google/go-containerregistry/releases/download/${CRANE_VERSION}/${crane_archive}" \
+            -o "${crane_archive}"
+          grep "  ${crane_archive}$" "${crane_checksums}" | sha256sum -c -
+          tar -xzf "${crane_archive}" -C "${target_dir}" crane
+          rm -f "${crane_archive}"
 
+          supercronic_asset="supercronic-linux-${arch}"
           curl -fsSL \
-            "https://github.com/aptible/supercronic/releases/download/${SUPERCRONIC_VERSION}/supercronic-linux-${arch}" \
+            "https://github.com/aptible/supercronic/releases/download/${SUPERCRONIC_VERSION}/${supercronic_asset}" \
             -o "${target_dir}/supercronic"
+          supercronic_sha256="$(
+            curl -fsSL "https://api.github.com/repos/aptible/supercronic/releases/tags/${SUPERCRONIC_VERSION}" |
+              jq -r --arg name "${supercronic_asset}" '.assets[] | select(.name == $name) | .digest | sub("^sha256:"; "")'
+          )"
+          if [ -z "${supercronic_sha256}" ]; then
+            echo "Failed to find checksum for ${supercronic_asset}" >&2
+            exit 1
+          fi
+          echo "${supercronic_sha256}  ${target_dir}/supercronic" | sha256sum -c -
 
           chmod +x "${target_dir}/crane" "${target_dir}/supercronic"
         done
+
+        rm -f "${crane_checksums}"
 
     - name: Generate image tags
       id: image-tags
