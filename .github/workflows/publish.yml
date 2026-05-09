@@ -86,6 +86,10 @@ jobs:
             echo "Failed to find checksum for ${supercronic_asset}" >&2
             exit 1
           fi
+          if [[ ! "${supercronic_sha256}" =~ ^[a-fA-F0-9]{64}$ ]]; then
+            echo "Invalid checksum for ${supercronic_asset}: ${supercronic_sha256}" >&2
+            exit 1
+          fi
           echo "${supercronic_sha256}  ${target_dir}/supercronic" | sha256sum -c -
 
           chmod +x "${target_dir}/crane" "${target_dir}/supercronic"
