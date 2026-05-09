@@ -13,6 +13,7 @@
 9. CI下载工具时添加完整性校验
 10. CI校验supercronic校验值格式
 11. CI发布beta版时将GitHub Release标记为预发布
+12. 启动时打印版本号
 
 ## v2026.5.4.0
 

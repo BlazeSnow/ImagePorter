@@ -124,6 +124,8 @@ jobs:
         push: true
         platforms: linux/amd64,linux/arm64
         tags: ${{ steps.image-tags.outputs.tags }}
+        build-args: |
+          VERSION=${{ inputs.tag }}
 
     - uses: ncipollo/release-action@v1
       with:
