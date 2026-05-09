@@ -5,8 +5,9 @@ ARG TARGETOS=linux
 ARG TARGETARCH=amd64
 
 # 开发信息
-LABEL repository="https://github.com/imageporter/ImagePorter"
-LABEL license="MIT"
+LABEL org.opencontainers.image.documentation="https://www.blazesnow.com/imageporter/"
+LABEL org.opencontainers.image.source="https://github.com/imageporter/ImagePorter"
+LABEL org.opencontainers.image.licenses="MIT"
 
 # 环境变量
 ENV TZ="Asia/Shanghai" \
