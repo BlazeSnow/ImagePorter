@@ -10,6 +10,14 @@ if [ ! -f images.json ]; then
 	exit 1
 fi
 
+# 检查images.json文件格式是否正确
+if jq -e 'type == "array" and all(.[]; (.source | type == "string" and length > 0) and (.target | type == "string" and length > 0))' images.json >/dev/null 2>&1; then
+	log INFO "images.json格式正确"
+else
+	log ERROR "images.json格式不正确，source和target必须为非空字符串"
+	exit 1
+fi
+
 # 检查images.json文件中的target有无重复
 duplicate_targets=$(jq -r '.[].target' images.json | sort | uniq -d)
 if [ -n "$duplicate_targets" ]; then
