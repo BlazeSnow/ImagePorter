@@ -46,13 +46,14 @@ for i in $(seq 0 $((count - 1))); do
 
 	# 同步镜像
 	success="false"
-	while [ "$success" = "false" ]; do
-		# 首次尝试同步
-		log INFO "开始尝试同步镜像"
-		if CraneCopy "$SOURCE" "$TARGET"; then
-			success="true"
-			break
-		fi
+
+	# 首次尝试同步
+	log INFO "开始尝试同步镜像"
+	if CraneCopy "$SOURCE" "$TARGET"; then
+		success="true"
+	fi
+
+	if [ "$success" = "false" ]; then
 		log WARNING "第一次尝试失败，等待 $RETRY_DELAY_TIME 秒后处理"
 		sleep "$RETRY_DELAY_TIME"
 
@@ -60,8 +61,10 @@ for i in $(seq 0 $((count - 1))); do
 		log INFO "开始第二次尝试同步镜像"
 		if CraneCopy "$SOURCE" "$TARGET"; then
 			success="true"
-			break
 		fi
+	fi
+
+	if [ "$success" = "false" ]; then
 		log WARNING "第二次尝试失败，等待 $RETRY_DELAY_TIME 秒后处理"
 		sleep "$RETRY_DELAY_TIME"
 
@@ -69,12 +72,10 @@ for i in $(seq 0 $((count - 1))); do
 		log INFO "开始第三次尝试同步镜像，下载后上传，此方式需要较长时间"
 		if CraneAdvancedCopy "$SOURCE" "$TARGET"; then
 			success="true"
-			break
+		else
+			log WARNING "第三次尝试失败"
 		fi
-		log WARNING "第三次尝试失败"
-		break
-
-	done
+	fi
 
 	# 同步多次后失败
 	if [ "$success" = "false" ]; then
