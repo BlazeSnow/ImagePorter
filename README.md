@@ -2,9 +2,9 @@
 
 ![Docker Pulls](https://img.shields.io/docker/pulls/imageporter/imageporter?style=for-the-badge)
 ![Docker Image Size](https://img.shields.io/docker/image-size/imageporter/imageporter?style=for-the-badge)
-![GitHub last commit (branch)](https://img.shields.io/github/last-commit/imageporter/imageporter/main?style=for-the-badge)
-![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/imageporter/imageporter/publish.yml?style=for-the-badge)
-![GitHub License](https://img.shields.io/github/license/imageporter/imageporter?style=for-the-badge)
+![GitHub last commit (branch)](https://img.shields.io/github/last-commit/imageporter/ImagePorter/main?style=for-the-badge)
+![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/imageporter/ImagePorter/publish.yml?style=for-the-badge)
+![GitHub License](https://img.shields.io/github/license/imageporter/ImagePorter?style=for-the-badge)
 
 ## 一、软件说明
 
