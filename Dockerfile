@@ -17,7 +17,7 @@ ENV TZ="Asia/Shanghai" \
     RETRY_DELAY_TIME="5"
 
 # 安装依赖
-RUN apk --no-cache add jq tzdata
+RUN apk --no-cache add bash jq tzdata
 
 # 工作目录
 RUN mkdir -p /app
