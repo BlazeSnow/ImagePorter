@@ -1,5 +1,5 @@
 # 运行镜像
-FROM alpine:latest
+FROM alpine:3.23
 
 ARG TARGETOS=linux
 ARG TARGETARCH=amd64
